@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wan Naqib — Creative Designer</title>
+  <meta name="description" content="Portfolio of Wan Naqib, creative designer — branding, illustration, posters and social design." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       COLOURS — change --accent to your brand colour
+       ========================================================= */
+    :root {
+      color-scheme: light;
+      --accent: #ff5c35;
+      --ui: #f3f3f3;          /* panels, menus, toolbar */
+      --ui-head: #e8e8e8;     /* panel headers */
+      --ui-hover: #e2e2e2;
+      --line: #d2d2d2;
+      --text: #2b2b2b;
+      --text-2: #707070;
+      --field: #ffffff;
+      --field-line: #cbcbcb;
+      --pasteboard: #dcdcdc;
+      --artboard: #ffffff;
+      --select: #3d7cf7;      /* selection / bounding box blue */
+      --select-soft: #dde8fd;
+      --ink: #1c1c1e;
+      --ui-font: "Inter", system-ui, sans-serif;
+      --display: "Space Grotesk", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      height: 100dvh; overflow: hidden;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 264px;
+      grid-template-rows: 32px 30px minmax(0, 1fr) 26px;
+      grid-template-areas: "menu menu menu" "tabs tabs tabs" "tools stage dock" "status status status";
+      font: 12px/1.45 var(--ui-font); color: var(--text); background: var(--ui);
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; color: inherit; }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ---------- Menu bar ---------- */
+    .menubar {
+      grid-area: menu; display: flex; align-items: center; gap: 4px; padding: 0 8px;
+      background: var(--ui); border-bottom: 1px solid var(--line); position: relative; z-index: 60;
+    }
+    .mark {
+      width: 22px; height: 22px; border-radius: 4px; flex: none; margin-right: 6px;
+      display: grid; place-items: center; background: var(--ink); color: #fff;
+      font: 700 10px/1 var(--display); text-decoration: none;
+    }
+    .menus { display: flex; list-style: none; }
+    .menus > li { position: relative; }
+    .menus > li > button {
+      border: 0; background: none; padding: 4px 9px; border-radius: 4px; cursor: default; font-size: 12.5px;
+    }
+    .menus > li > button:hover, .menus > li.open > button { background: var(--ui-hover); }
+    .dropdown {
+      display: none; position: absolute; top: calc(100% + 3px); left: 0; min-width: 230px;
+      background: #fafafa; border: 1px solid var(--line); border-radius: 6px; padding: 4px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.14); list-style: none;
+    }
+    .menus > li.open .dropdown { display: block; }
+    .dropdown button {
+      width: 100%; display: flex; justify-content: space-between; gap: 24px; text-align: left;
+      border: 0; background: none; padding: 5px 10px 5px 24px; border-radius: 4px; cursor: default; position: relative;
+    }
+    .dropdown button:not(:disabled):hover { background: var(--select); color: #fff; }
+    .dropdown button:disabled { color: #aaa; }
+    .dropdown button kbd { font: inherit; color: var(--text-2); }
+    .dropdown button:hover kbd { color: inherit; }
+    .dropdown button.checked::before { content: "✓"; position: absolute; left: 8px; }
+    .dropdown hr { border: 0; border-top: 1px solid var(--line); margin: 4px 6px; }
+    .mnav { display: none; gap: 2px; }
+    .mnav a { text-decoration: none; padding: 6px 10px; border-radius: 4px; font-size: 13px; }
+    .mb-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+      font: 600 12px var(--ui-font); text-decoration: none; white-space: nowrap;
+      padding: 5px 12px; border-radius: 4px; border: 1px solid var(--ink); background: var(--ink); color: #fff;
+    }
+    .btn:hover { background: var(--accent); border-color: var(--accent); }
+    .btn.ghost { background: transparent; color: var(--ink); }
+    .btn.ghost:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .btn.lg { font-size: 14px; padding: 10px 18px; }
+
+    /* ---------- Document tab bar ---------- */
+    .tabbar { grid-area: tabs; display: flex; align-items: end; padding: 0 8px; background: var(--ui-head); border-bottom: 1px solid var(--line); }
+    .doctab {
+      display: flex; align-items: center; gap: 12px; height: 26px; padding: 0 10px 0 12px;
+      background: var(--ui); border: 1px solid var(--line); border-bottom: 0; border-radius: 5px 5px 0 0; margin-bottom: -1px;
+    }
+    .doctab .x { color: var(--text-2); font-size: 14px; line-height: 1; }
+
+    /* ---------- Tools panel ---------- */
+    .tools {
+      grid-area: tools; background: var(--ui); border-right: 1px solid var(--line);
+      display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0;
+    }
+    .tools .grip { width: 18px; height: 3px; border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; margin-bottom: 6px; }
+    .tool {
+      width: 32px; height: 30px; display: grid; place-items: center; border: 0; background: none;
+      border-radius: 4px; color: #464646; cursor: default; position: relative;
+    }
+    .tool:hover { background: var(--ui-hover); }
+    .tool.on { background: #d4d4d4; color: #000; }
+    .tool svg { width: 17px; height: 17px; }
+    .tool::after { /* little corner triangle like real tool groups */
+      content: ""; position: absolute; right: 3px; bottom: 3px;
+      border-left: 3px solid transparent; border-bottom: 3px solid #888;
+    }
+    .tool[data-tool="hand"]::after, .tool[data-tool="zoom"]::after { display: none; }
+    .tools hr { width: 24px; border: 0; border-top: 1px solid var(--line); margin: 5px 0; }
+    .fillstroke { position: relative; width: 34px; height: 34px; margin-top: 6px; }
+    .fillstroke i { position: absolute; width: 20px; height: 20px; border: 1px solid #8a8a8a; }
+    .fillstroke .fill { left: 2px; top: 2px; background: var(--accent); z-index: 1; }
+    .fillstroke .stroke { right: 2px; bottom: 2px; background: #fff; box-shadow: inset 0 0 0 4px var(--ink); }
+
+    /* ---------- Stage: rulers + canvas ---------- */
+    .stage { grid-area: stage; display: grid; grid-template-columns: 18px minmax(0, 1fr); grid-template-rows: 18px minmax(0, 1fr); min-width: 0; min-height: 0; }
+    .stage.no-rulers { grid-template-columns: 0 minmax(0, 1fr); grid-template-rows: 0 minmax(0, 1fr); }
+    .stage.no-rulers canvas, .stage.no-rulers .corner { display: none; }
+    .corner { background: var(--ui); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    #rx, #ry { width: 100%; height: 100%; display: block; background: var(--ui); }
+    #rx { border-bottom: 1px solid var(--line); }
+    #ry { border-right: 1px solid var(--line); }
+
+    .canvas { grid-column: 2; grid-row: 2; overflow: auto; background: var(--pasteboard); position: relative; padding: 56px 48px 120px; outline: none; }
+    .canvas[data-tool="hand"] { cursor: grab; }
+    .canvas[data-tool="hand"].dragging { cursor: grabbing; }
+    .canvas[data-tool="hand"] .piece, .canvas[data-tool="zoom"] .piece { cursor: inherit; }
+    .canvas[data-tool="zoom"] { cursor: zoom-in; }
+    .canvas[data-tool="zoom"].alt { cursor: zoom-out; }
+
+    .stack { width: 960px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 90px; }
+
+    /* ---------- Artboards ---------- */
+    .ab { scroll-margin-top: 36px; }
+    .ab.hidden-layer { display: none; }
+    .ab-label { font: 11px var(--ui-font); color: #4d4d4d; margin-bottom: 5px; cursor: default; }
+    .artboard {
+      background: var(--artboard); position: relative;
+      outline: 1px solid #b9b9b9; box-shadow: 2px 3px 0 rgba(0,0,0,.08);
+    }
+    .ab.active .artboard { outline: 1px solid #1e1e1e; }
+    .canvas.grid .artboard {
+      background-image:
+        linear-gradient(rgba(61,124,247,.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,124,247,.10) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .kicker { font-size: 11px; color: var(--text-2); letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+    .accent { color: var(--accent); }
+    h2.title { font: 700 40px/1 var(--display); letter-spacing: -0.02em; color: var(--ink); }
+
+    /* Selection box with 8 handles (used on hero name + artworks) */
+    .bbox { position: absolute; inset: -1px; border: 1px solid var(--select); pointer-events: none; opacity: 0; transition: opacity .12s; }
+    .bbox i { position: absolute; width: 7px; height: 7px; background: #fff; border: 1px solid var(--select); }
+    .bbox i:nth-child(1) { left: -4px; top: -4px; }
+    .bbox i:nth-child(2) { left: calc(50% - 3.5px); top: -4px; }
+    .bbox i:nth-child(3) { right: -4px; top: -4px; }
+    .bbox i:nth-child(4) { right: -4px; top: calc(50% - 3.5px); }
+    .bbox i:nth-child(5) { right: -4px; bottom: -4px; }
+    .bbox i:nth-child(6) { left: calc(50% - 3.5px); bottom: -4px; }
+    .bbox i:nth-child(7) { left: -4px; bottom: -4px; }
+    .bbox i:nth-child(8) { left: -4px; top: calc(50% - 3.5px); }
+    .bbox b { position: absolute; left: calc(50% - 3px); top: calc(50% - 3px); width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--select); background: transparent; }
+
+    /* Hero */
+    .hero { padding: 72px 72px 40px; display: grid; gap: 26px; overflow: hidden; }
+    .hero h1 { font: 700 92px/0.96 var(--display); letter-spacing: -0.035em; color: var(--ink); position: relative; z-index: 1; }
+    .name { position: relative; display: inline-block; }
+    .name .bbox { opacity: 1; inset: -2px -4px; }
+    .measure {
+      position: absolute; left: calc(100% + 14px); top: calc(50% - 9px); white-space: nowrap;
+      font: 500 10px var(--ui-font); letter-spacing: 0; color: #fff; background: #5a5a5a; padding: 3px 6px; border-radius: 2px;
+    }
+    .hero .lead { font-size: 19px; line-height: 1.55; max-width: 560px; color: #3a3a3e; position: relative; z-index: 1; }
+    .hero .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pen-art { position: absolute; right: 28px; top: 28px; width: 230px; height: 230px; pointer-events: none; }
+    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid #ececec; padding-top: 18px; margin-top: 10px; }
+    .chips { display: flex; gap: 5px; }
+    .chips span { width: 20px; height: 20px; border: 1px solid rgba(0,0,0,.14); }
+    .coords { font-size: 11px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+
+    /* Work */
+    .work { padding: 52px 48px 56px; }
+    .work-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 18px; }
+    .filters { display: flex; flex-wrap: nowrap; max-width: 100%; overflow-x: auto; gap: 0; margin-bottom: 30px; border: 1px solid var(--field-line); border-radius: 5px; width: fit-content; overflow: hidden; }
+    .filters button { white-space: nowrap; flex: none; border: 0; border-right: 1px solid var(--field-line); background: #fff; padding: 6px 14px; cursor: pointer; font-size: 12px; }
+    .filters button:last-child { border-right: 0; }
+    .filters button:hover { background: #f1f1f1; }
+    .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 28px; }
+    .piece { display: block; align-self: start; text-align: left; border: 0; background: none; cursor: pointer; }
+    .piece.hide { display: none; }
+    .obj { position: relative; }
+    .frame { aspect-ratio: 4 / 5; overflow: hidden; background: #f4f4f4; }
+    .frame img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .piece:hover .frame { outline: 1px solid var(--select); }
+    .piece.sel .bbox, .piece:focus-visible .bbox { opacity: 1; }
+    .piece:focus-visible { outline: none; }
+    .piece:hover img { transform: scale(1.03); }
+    .piece .meta { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
+    .piece h3 { font: 600 14px var(--ui-font); color: var(--ink); }
+    .piece small { font-size: 11px; color: var(--text-2); white-space: nowrap; padding-top: 2px; }
+
+    /* About */
+    .about { padding: 56px 56px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+    .about .big { font: 500 28px/1.25 var(--display); color: var(--ink); letter-spacing: -0.01em; margin: 14px 0 16px; }
+    .about p { font-size: 15px; line-height: 1.65; color: #3a3a3e; margin-bottom: 12px; }
+    .lists { display: grid; gap: 24px; align-content: start; }
+    .lists h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-2); margin-bottom: 8px; font-weight: 600; }
+    .lists ul { list-style: none; border-top: 1px solid #ececec; }
+    .lists li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #ececec; font-size: 14px; color: var(--ink); }
+    .lists li .c { width: 10px; height: 10px; flex: none; }
+    .lists li em { margin-left: auto; font-style: normal; font-size: 11px; color: var(--text-2); }
+
+    /* Contact */
+    .contact { padding: 72px 56px; text-align: center; display: grid; gap: 22px; justify-items: center; }
+    .contact h2 { font: 700 64px/1 var(--display); letter-spacing: -0.03em; color: var(--ink); }
+    .contact .mail { font: 500 24px var(--display); text-decoration: none; color: var(--ink); border-bottom: 2px solid var(--accent); }
+    .contact .mail:hover { color: var(--accent); }
+    .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+
+    /* ---------- Right dock panels ---------- */
+    .dock { grid-area: dock; background: var(--ui); border-left: 1px solid var(--line); overflow-y: auto; }
+    .panel { border-bottom: 1px solid var(--line); }
+    .ph {
+      width: 100%; display: flex; align-items: center; gap: 6px; text-align: left; border: 0; cursor: pointer;
+      background: var(--ui-head); padding: 6px 10px; font-weight: 600; font-size: 11.5px; border-bottom: 1px solid var(--line);
+    }
+    .ph::before { content: "▾"; font-size: 9px; color: var(--text-2); width: 8px; }
+    .panel.collapsed .ph::before { content: "▸"; }
+    .panel.collapsed .pb { display: none; }
+    .pb { padding: 4px 0 8px; }
+    .pg { padding: 8px 12px; border-bottom: 1px solid #e3e3e3; }
+    .pg:last-child { border-bottom: 0; }
+    .pg h5 { font-size: 11px; font-weight: 600; margin-bottom: 7px; }
+    .pg .sub { color: var(--text-2); font-size: 11px; margin-bottom: 6px; }
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+    .field { display: flex; align-items: center; gap: 6px; }
+    .field label { width: 12px; color: var(--text-2); font-size: 11px; }
+    .field output, .wide {
+      flex: 1; background: var(--field); border: 1px solid var(--field-line); border-radius: 3px;
+      padding: 2px 6px; font-size: 11px; min-height: 20px; font-variant-numeric: tabular-nums;
+    }
+    .wide { display: block; margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .appear { display: flex; align-items: center; gap: 8px; font-size: 11.5px; padding: 3px 0; }
+    .appear .sq { width: 16px; height: 16px; border: 1px solid #999; flex: none; }
+    .appear span:last-child { margin-left: auto; color: var(--text-2); }
+    .btnrow { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .pbtn {
+      border: 1px solid var(--field-line); background: #fff; border-radius: 4px; padding: 5px 8px; cursor: pointer; font-size: 11.5px;
+    }
+    .pbtn:hover { border-color: #999; }
+    .pbtn.on { background: var(--select-soft); border-color: var(--select); }
+    .pbtn.primary { background: var(--select); border-color: var(--select); color: #fff; }
+    .pbtn.primary:hover { filter: brightness(1.08); }
+    .stack-btns { display: grid; gap: 6px; }
+
+    /* Layers */
+    .layers { list-style: none; }
+    .layer {
+      display: flex; align-items: center; gap: 6px; height: 28px; padding-right: 8px; cursor: pointer;
+      border-bottom: 1px solid #e6e6e6; font-size: 12px;
+    }
+    .layer:hover { background: #eaeaea; }
+    .layer.active { background: var(--select-soft); }
+    .layer .eye { width: 26px; height: 100%; display: grid; place-items: center; border: 0; background: none; cursor: pointer; color: #555; border-right: 1px solid #e3e3e3; }
+    .layer .eye.off svg { opacity: .25; }
+    .layer .bar { width: 3px; height: 18px; flex: none; }
+    .layer .tw { width: 12px; font-size: 9px; color: var(--text-2); text-align: center; flex: none; }
+    .layer .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .layer .tg { width: 9px; height: 9px; border: 1px solid #888; border-radius: 50%; flex: none; }
+    .layer.child { padding-left: 46px; height: 24px; font-size: 11.5px; color: #444; }
+    .layer.child .thumb { width: 16px; height: 16px; flex: none; border: 1px solid #ccc; object-fit: cover; }
+    .layers .kids { display: none; }
+    .layers .kids.open { display: block; }
+    .layer-foot { display: flex; justify-content: space-between; padding: 6px 10px; color: var(--text-2); font-size: 11px; }
+
+    /* Swatches */
+    .swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 10px 12px 4px; }
+    .swatches button { aspect-ratio: 1; border: 1px solid rgba(0,0,0,.18); cursor: pointer; border-radius: 1px; }
+    .swatches button:hover { outline: 2px solid var(--select); outline-offset: 1px; }
+    .swatches button.cur { outline: 2px solid var(--ink); outline-offset: 1px; }
+    .sw-note { padding: 4px 12px 8px; color: var(--text-2); font-size: 11px; }
+
+    /* ---------- Status bar ---------- */
+    .status {
+      grid-area: status; display: flex; align-items: center; gap: 14px; padding: 0 10px;
+      background: var(--ui); border-top: 1px solid var(--line); font-size: 11px; color: #555; white-space: nowrap;
+    }
+    .status select {
+      font: inherit; border: 1px solid var(--field-line); border-radius: 3px; background: #fff; padding: 1px 4px; height: 19px;
+    }
+    .abnav { display: flex; align-items: center; gap: 3px; }
+    .abnav button { border: 0; background: none; width: 18px; height: 18px; cursor: pointer; border-radius: 3px; font-size: 10px; color: #555; }
+    .abnav button:hover { background: var(--ui-hover); }
+    .status .right { margin-left: auto; }
+
+    /* ---------- Lightbox (preview) ---------- */
+    dialog.lightbox { border: 0; padding: 0; background: transparent; width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh; margin: 0; }
+    dialog.lightbox::backdrop { background: rgba(220,220,220,.96); }
+    .lb-inner { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+    .lb-top { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--ui); border-bottom: 1px solid var(--line); font-size: 12px; }
+    .lb-stage { display: grid; place-items: center; min-height: 0; padding: 24px 16px; overflow: hidden; }
+    .lb-stage img { width: auto; height: auto; max-width: min(1100px, 100%); max-height: calc(100dvh - 150px); object-fit: contain; background: #fff; outline: 1px solid #1e1e1e; }
+    .lb-bar { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 12px 16px; text-align: center; }
+    .lb-bar h3 { font: 600 14px var(--ui-font); }
+    .lb-bar p { font-size: 11px; color: var(--text-2); }
+    .icon-btn { width: 34px; height: 34px; border-radius: 4px; border: 1px solid var(--field-line); background: #fff; cursor: pointer; display: grid; place-items: center; }
+    .icon-btn:hover { border-color: #888; }
+
+    /* Toast */
+    .toast {
+      position: fixed; left: 50%; bottom: 44px; transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+      background: #333; color: #fff; padding: 8px 14px; border-radius: 5px; font-size: 12px; transition: .2s; z-index: 100; max-width: 90vw; text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---------- Phone & small tablet ---------- */
+    @media (max-width: 860px) {
+      body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: 48px minmax(0, 1fr) 30px;
+        grid-template-areas: "menu" "stage" "status";
+      }
+      .tabbar, .tools, .dock, .menus, .status .hide-sm { display: none; }
+      .mnav { display: flex; }
+      .menubar .btn { display: none; }
+      .stage { grid-template-columns: 0 minmax(0, 1fr); grid-template-rows: 0 minmax(0, 1fr); }
+      .stage canvas, .stage .corner { display: none; }
+      .canvas { padding: 28px 14px 60px; }
+      .stack { width: auto; gap: 48px; zoom: 1 !important; }
+      .hero { padding: 36px 22px 24px; gap: 20px; }
+      .hero h1 { font-size: clamp(40px, 12vw, 64px); }
+      .hero .lead { font-size: 16px; }
+      .pen-art, .measure, .desk-only { display: none; }
+      .work { padding: 28px 16px 32px; }
+      .work-head { flex-direction: column; align-items: start; gap: 4px; }
+      h2.title { font-size: 30px; }
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 24px 14px; }
+      .piece h3 { font-size: 12.5px; }
+      .piece small { display: none; }
+      .about { grid-template-columns: 1fr; padding: 32px 22px; gap: 28px; }
+      .about .big { font-size: 22px; }
+      .contact { padding: 44px 20px; }
+      .contact h2 { font-size: 40px; }
+      .contact .mail { font-size: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ================= Menu bar ================= -->
+  <header class="menubar">
+    <a href="#ab-hello" class="mark" data-goto="hello" aria-label="Home">WN</a>
+    <ul class="menus" id="menus"></ul>
+    <nav class="mnav" aria-label="Main">
+      <a href="#ab-work" data-goto="work">Work</a>
+      <a href="#ab-about" data-goto="about">About</a>
+      <a href="#ab-contact" data-goto="contact">Contact</a>
+    </nav>
+    <div class="mb-right"><a class="btn" href="#ab-contact" data-goto="contact">Hire me</a></div>
+  </header>
+
+  <!-- ================= Document tab ================= -->
+  <div class="tabbar">
+    <div class="doctab"><span id="docTitle">wan-naqib-portfolio.ai @ 100% (RGB/Preview)</span><span class="x" aria-hidden="true">×</span></div>
+  </div>
+
+  <!-- ================= Tools ================= -->
+  <aside class="tools" aria-label="Tools">
+    <span class="grip" aria-hidden="true"></span>
+    <button class="tool on" data-tool="select" title="Selection Tool (V)" aria-label="Selection tool">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 1l10 7.2-4.6.7 2.6 5.3-1.9.9-2.6-5.3L3 13.3z"/></svg></button>
+    <button class="tool" data-tool="direct" title="Direct Selection Tool (A)" aria-label="Direct selection tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3.5 1.5l9 6.5-4.2.6 2.4 4.9-1.5.7-2.4-4.9-3.3 2.9z"/></svg></button>
+    <hr />
+    <button class="tool" data-tool="pen" title="Pen Tool (P)" aria-label="Pen tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 1.5l4.5 6.5L10 14H6L3.5 8z"/><path d="M8 1.5V7"/><circle cx="8" cy="8.3" r="1.2" fill="currentColor"/></svg></button>
+    <button class="tool" data-tool="curv" title="Curvature Tool (Shift+~)" aria-label="Curvature tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12c2-8 10-8 12 0"/><circle cx="2" cy="12" r="1.3" fill="currentColor"/><circle cx="14" cy="12" r="1.3" fill="currentColor"/></svg></button>
+    <button class="tool" data-tool="type" title="Type Tool (T)" aria-label="Type tool">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 2h11v3.2H12V3.5H8.8v9.3h1.9v1.5H5.3v-1.5h1.9V3.5H4v1.7H2.5z"/></svg></button>
+    <button class="tool" data-tool="rect" title="Rectangle Tool (M)" aria-label="Rectangle tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2.5" y="3.5" width="11" height="9"/></svg></button>
+    <button class="tool" data-tool="brush" title="Paintbrush Tool (B)" aria-label="Paintbrush tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M14 2L7 9"/><path d="M6.5 9.5c-2 0-3 1.3-3 3.5 2.2 0 3.5-1 3.5-3z" fill="currentColor"/></svg></button>
+    <button class="tool" data-tool="rotate" title="Rotate Tool (R)" aria-label="Rotate tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M13 8a5 5 0 1 1-1.5-3.6"/><path d="M12 1.5v3h-3"/></svg></button>
+    <button class="tool" data-tool="eyedrop" title="Eyedropper Tool (I)" aria-label="Eyedropper tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M10 3l3 3M3 13l1-3 6-6 2 2-6 6z"/></svg></button>
+    <hr />
+    <button class="tool" data-tool="artboard" title="Artboard Tool (Shift+O)" aria-label="Artboard tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 1v14M12 1v14M1 4h14M1 12h14"/></svg></button>
+    <button class="tool" data-tool="hand" title="Hand Tool (H) — drag to move around" aria-label="Hand tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 8V3.5a1 1 0 0 1 2 0V7m0-4.5v-1a1 1 0 0 1 2 0V7m0-4.5a1 1 0 0 1 2 0V7m0-3a1 1 0 0 1 2 0v5.5c0 3-2 5-4.5 5-2 0-3-1-4.3-3L2.7 9a1 1 0 0 1 1.6-1.2L5 9"/></svg></button>
+    <button class="tool" data-tool="zoom" title="Zoom Tool (Z) — click to zoom in, Alt+click to zoom out" aria-label="Zoom tool">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="6.8" cy="6.8" r="4.6"/><path d="M10.2 10.2L14.5 14.5"/></svg></button>
+    <div class="fillstroke" title="Fill & Stroke" aria-hidden="true"><i class="fill"></i><i class="stroke"></i></div>
+  </aside>
+
+  <!-- ================= Stage ================= -->
+  <section class="stage" id="stage">
+    <div class="corner"></div>
+    <canvas id="rx" aria-hidden="true"></canvas>
+    <canvas id="ry" aria-hidden="true"></canvas>
+
+    <main class="canvas" id="canvas" data-tool="select" tabindex="-1">
+      <div class="stack" id="stack">
+
+        <!-- ===== Artboard 01: Hello ===== -->
+        <section class="ab" id="ab-hello" data-name="Hello" data-color="#3d7cf7">
+          <div class="ab-label">01 - Hello</div>
+          <div class="artboard hero">
+            <svg class="pen-art" viewBox="0 0 300 300" aria-hidden="true">
+              <path d="M30 230 C 60 80, 170 60, 190 150 S 270 250, 280 70" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round"/>
+              <g stroke="#3d7cf7" stroke-width="1" fill="#fff">
+                <line x1="30" y1="230" x2="60" y2="80"/><line x1="190" y1="150" x2="170" y2="60"/>
+                <line x1="190" y1="150" x2="210" y2="240"/><line x1="280" y1="70" x2="270" y2="250"/>
+                <circle cx="60" cy="80" r="3.5"/><circle cx="170" cy="60" r="3.5"/><circle cx="210" cy="240" r="3.5"/><circle cx="270" cy="250" r="3.5"/>
+                <rect x="26" y="226" width="8" height="8"/><rect x="186" y="146" width="8" height="8" fill="#3d7cf7"/><rect x="276" y="66" width="8" height="8"/>
+              </g>
+            </svg>
+            <p class="kicker">Creative Designer · Based in Malaysia</p>
+            <h1>
+              Hi, I'm<br />
+              <span class="name" id="heroName">Wan Naqib.<span class="bbox"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="measure" id="measure"></span></span><br />
+              I make ideas <span class="accent">visible.</span>
+            </h1>
+            <p class="lead">I design brand identities, posters, illustrations and social content — bold, thoughtful visuals that help people and brands stand out.</p>
+            <div class="actions">
+              <a class="btn lg" href="#ab-work" data-goto="work">View my work →</a>
+              <a class="btn lg ghost" href="#ab-contact" data-goto="contact">Get in touch</a>
+            </div>
+            <div class="hero-foot">
+              <div class="chips" aria-hidden="true">
+                <span style="background:#1c1c1e"></span><span style="background:var(--accent)"></span><span style="background:#ffc93c"></span>
+                <span style="background:#3d7cf7"></span><span style="background:#8fd3b6"></span><span style="background:#fff"></span>
+              </div>
+              <span class="coords desk-only">Tip: try the Hand (H) and Zoom (Z) tools, or the View menu.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Artboard 02: Work ===== -->
+        <section class="ab" id="ab-work" data-name="Work" data-color="#ff5c35">
+          <div class="ab-label">02 - Selected Work</div>
+          <div class="artboard work">
+            <div class="work-head">
+              <div><p class="kicker">Portfolio</p><h2 class="title">Selected work</h2></div>
+              <span class="coords" id="countLabel"></span>
+            </div>
+            <div class="filters" role="group" aria-label="Filter work" id="filters"></div>
+            <div class="gallery" id="gallery"></div>
+          </div>
+        </section>
+
+        <!-- ===== Artboard 03: About ===== -->
+        <section class="ab" id="ab-about" data-name="About" data-color="#2ea86b">
+          <div class="ab-label">03 - About</div>
+          <div class="artboard about">
+            <div>
+              <p class="kicker">About me</p>
+              <p class="big">I'm a creative designer who loves turning messy ideas into clean, memorable visuals.</p>
+              <p>Write 2–3 sentences about yourself here: where you studied or how you started, the kind of clients or projects you enjoy, and what makes your style yours.</p>
+              <p>Currently open to freelance projects and collaborations.</p>
+            </div>
+            <div class="lists">
+              <div>
+                <h4>Services</h4>
+                <ul>
+                  <li><span class="c" style="background:var(--accent)"></span>Branding &amp; logo design</li>
+                  <li><span class="c" style="background:#ffc93c"></span>Illustration</li>
+                  <li><span class="c" style="background:#3d7cf7"></span>Posters &amp; print</li>
+                  <li><span class="c" style="background:#8fd3b6"></span>Social media &amp; UI</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Tools</h4>
+                <ul>
+                  <li>Adobe Illustrator <em>Expert</em></li>
+                  <li>Adobe Photoshop <em>Advanced</em></li>
+                  <li>Figma <em>Advanced</em></li>
+                  <li>Procreate <em>Intermediate</em></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Artboard 04: Contact ===== -->
+        <section class="ab" id="ab-contact" data-name="Contact" data-color="#a45bf0">
+          <div class="ab-label">04 - Contact</div>
+          <div class="artboard contact">
+            <p class="kicker">Have a project in mind?</p>
+            <h2>Let's create something <span class="accent">together.</span></h2>
+            <a class="mail" id="mailLink" href="mailto:hello@example.com">hello@example.com</a>
+            <div class="socials">
+              <a class="btn ghost lg" href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+              <a class="btn ghost lg" href="https://behance.net/" target="_blank" rel="noopener">Behance</a>
+              <a class="btn ghost lg" href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </section>
+
+  <!-- ================= Right panels ================= -->
+  <aside class="dock" aria-label="Panels">
+    <div class="panel" id="pProps">
+      <button class="ph">Properties</button>
+      <div class="pb" id="propsBody"></div>
+    </div>
+    <div class="panel" id="pLayers">
+      <button class="ph">Layers</button>
+      <div class="pb" style="padding:0">
+        <ul class="layers" id="layers"></ul>
+        <div class="layer-foot"><span id="layerCount"></span><span>Click a layer to jump</span></div>
+      </div>
+    </div>
+    <div class="panel" id="pSwatches">
+      <button class="ph">Swatches</button>
+      <div class="pb">
+        <div class="swatches" id="swatches"></div>
+        <p class="sw-note">Click a swatch to recolour the accent.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= Status bar ================= -->
+  <footer class="status">
+    <select id="zoomSel" class="hide-sm" aria-label="Zoom level"></select>
+    <div class="abnav">
+      <button id="abFirst" class="hide-sm" aria-label="First artboard">⏮</button>
+      <button id="abPrev" aria-label="Previous artboard">◀</button>
+      <select id="abSel" aria-label="Go to artboard"></select>
+      <button id="abNext" aria-label="Next artboard">▶</button>
+      <button id="abLast" class="hide-sm" aria-label="Last artboard">⏭</button>
+    </div>
+    <span id="toolName" class="hide-sm">Selection</span>
+    <span class="right">© <span id="year"></span> Wan Naqib</span>
+  </footer>
+
+  <!-- ================= Preview (lightbox) ================= -->
+  <dialog class="lightbox" id="lightbox" aria-label="Artwork preview">
+    <div class="lb-inner">
+      <div class="lb-top"><span id="lbFile"></span><button class="icon-btn" id="lbClose" aria-label="Close">✕</button></div>
+      <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" /></div>
+      <div class="lb-bar">
+        <button class="icon-btn" id="lbPrev" aria-label="Previous">←</button>
+        <div><h3 id="lbTitle"></h3><p id="lbMeta"></p></div>
+        <button class="icon-btn" id="lbNext" aria-label="Next">→</button>
+      </div>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    /* =========================================================
+       EDIT YOUR DETAILS & ARTWORK HERE
+       - Upload images into an "images" folder in your repo.
+       - "src" must match the file name exactly (case-sensitive!).
+       - "category" must match one of the CATEGORIES.
+       Until an image is uploaded, a coloured placeholder shows.
+       ========================================================= */
+    const EMAIL  = "hello@example.com";
+    const CV_URL = "cv.pdf";   // upload a cv.pdf to your repo, or change this link
+    const CATEGORIES = ["Branding", "Illustration", "Posters & Print", "Social & UI"];
+    const ARTWORKS = [
+      { title: "Kopi Pagi — Café Identity", category: "Branding",        year: 2026, src: "images/artwork-01.jpg" },
+      { title: "City at Dusk",              category: "Illustration",    year: 2026, src: "images/artwork-02.jpg" },
+      { title: "Music Festival Poster",     category: "Posters & Print", year: 2025, src: "images/artwork-03.jpg" },
+      { title: "Skincare Launch Campaign",  category: "Social & UI",     year: 2025, src: "images/artwork-04.jpg" },
+      { title: "Studio Logo Set",           category: "Branding",        year: 2025, src: "images/artwork-05.jpg" },
+      { title: "Character Series",          category: "Illustration",    year: 2025, src: "images/artwork-06.jpg" },
+      { title: "Book Cover Concept",        category: "Posters & Print", year: 2024, src: "images/artwork-07.jpg" },
+      { title: "Mobile App Screens",        category: "Social & UI",     year: 2024, src: "images/artwork-08.jpg" },
+      { title: "Batik Pattern Study",       category: "Illustration",    year: 2024, src: "images/artwork-09.jpg" },
+    ];
+    const SWATCHES = ["#ff5c35","#ffc93c","#3d7cf7","#2ea86b","#a45bf0","#ff4f9a","#00a6b4","#1c1c1e",
+                      "#ffd6c9","#fff1c2","#d6e4fd","#cdeedd","#eadcfd","#ffd3e6","#c7eef1","#8a8a8a"];
+    /* ========================================================= */
+
+    const $ = (s, el = document) => el.querySelector(s);
+    const canvas = $("#canvas"), stack = $("#stack");
+    const boards = [...document.querySelectorAll(".ab")];
+    const mobile = matchMedia("(max-width: 860px)");
+    const state = { zoom: 1, tool: "select", rulers: true, grid: false, active: 0, selected: null, space: false };
+    const HANDLES = '<span class="bbox"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>';
+
+    /* ---------- Placeholder art ---------- */
+    const PALETTES = [["#ff5c35","#ffc93c","#1c1c1e"],["#3d7cf7","#8fd3b6","#ffffff"],["#ffc93c","#1c1c1e","#ff5c35"],["#8fd3b6","#3d7cf7","#ffc93c"],["#1c1c1e","#ff5c35","#f4f4f4"]];
+    function placeholder(i, title) {
+      const [a, b, c] = PALETTES[i % PALETTES.length];
+      const shapes = [
+        `<circle cx="200" cy="210" r="120" fill="${b}"/><rect x="60" y="300" width="280" height="120" fill="${c}"/>`,
+        `<rect x="70" y="80" width="200" height="200" fill="${b}"/><circle cx="270" cy="300" r="90" fill="${c}"/>`,
+        `<path d="M40 420 L200 90 L360 420 Z" fill="${b}"/><circle cx="200" cy="300" r="60" fill="${c}"/>`,
+        `<rect x="60" y="60" width="280" height="160" rx="80" fill="${b}"/><rect x="60" y="250" width="130" height="180" fill="${c}"/><circle cx="270" cy="340" r="70" fill="${b}"/>`,
+        `<circle cx="140" cy="160" r="80" fill="${b}"/><circle cx="260" cy="160" r="80" fill="none" stroke="${c}" stroke-width="16"/><rect x="60" y="300" width="280" height="40" fill="${b}"/><rect x="60" y="360" width="180" height="40" fill="${c}"/>`,
+      ][i % 5];
+      const txt = c === "#ffffff" || c === "#f4f4f4" ? (a === "#1c1c1e" ? "#f4f4f4" : "#1c1c1e") : c;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><rect width="400" height="500" fill="${a}"/>${shapes}<text x="24" y="476" font-family="sans-serif" font-size="13" fill="${txt}" opacity=".85">${title.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</text></svg>`;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+    const fileName = a => a.src.split("/").pop();
+    const imgSrc = (a, i) => a._fallback || a.src;
+
+    /* ---------- Toast ---------- */
+    let toastT;
+    function toast(msg) {
+      const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+      clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200);
+    }
+
+    /* ---------- Gallery + filters ---------- */
+    const gallery = $("#gallery"), filters = $("#filters");
+    let visible = [];
+    ARTWORKS.forEach((art, i) => {
+      const b = document.createElement("button");
+      b.className = "piece"; b.dataset.index = i; b.dataset.cat = art.category;
+      b.innerHTML = `<div class="obj"><div class="frame"><img loading="lazy" alt=""></div>${HANDLES}</div>
+        <div class="meta"><h3></h3><small>${art.category} · ${art.year}</small></div>`;
+      b.querySelector("h3").textContent = art.title;
+      const img = b.querySelector("img");
+      img.alt = art.title;
+      img.onerror = () => { img.onerror = null; art._fallback = placeholder(i, art.title); img.src = art._fallback; refreshThumbs(); };
+      img.src = art.src;
+      b.addEventListener("mouseenter", () => select(i));
+      b.addEventListener("focus", () => select(i));
+      b.addEventListener("click", e => { if (state.tool === "select" || state.tool === "direct") openPreview(i); });
+      gallery.appendChild(b);
+    });
+    ["All", ...CATEGORIES].forEach((cat, k) => {
+      const b = document.createElement("button");
+      b.textContent = cat; b.dataset.cat = cat;
+      b.setAttribute("aria-pressed", k === 0 ? "true" : "false");
+      b.addEventListener("click", () => filter(cat));
+      filters.appendChild(b);
+    });
+    function filter(cat) {
+      filters.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.cat === cat));
+      gallery.querySelectorAll(".piece").forEach(p => p.classList.toggle("hide", cat !== "All" && p.dataset.cat !== cat));
+      visible = [...gallery.querySelectorAll(".piece:not(.hide)")].map(p => +p.dataset.index);
+      $("#countLabel").textContent = `${visible.length} of ${ARTWORKS.length} objects`;
+      requestAnimationFrame(drawRulers);
+    }
+    filter("All");
+
+    /* ---------- Selection & Properties panel ---------- */
+    function select(i) {
+      if (state.selected === i) return;
+      gallery.querySelectorAll(".piece.sel").forEach(p => p.classList.remove("sel"));
+      state.selected = i;
+      if (i !== null) gallery.querySelector(`.piece[data-index="${i}"]`).classList.add("sel");
+      renderProps(); renderLayers();
+    }
+    function relRect(el) { // position in "artboard pixels" relative to the first artboard
+      const z = state.zoom, o = stack.getBoundingClientRect(), r = el.getBoundingClientRect();
+      return { x: Math.round((r.left - o.left) / z), y: Math.round((r.top - o.top) / z), w: Math.round(r.width / z), h: Math.round(r.height / z) };
+    }
+    const fieldsHTML = r => `<div class="fields">
+      <div class="field"><label>X</label><output>${r.x} px</output></div><div class="field"><label>W</label><output>${r.w} px</output></div>
+      <div class="field"><label>Y</label><output>${r.y} px</output></div><div class="field"><label>H</label><output>${r.h} px</output></div></div>`;
+    function renderProps() {
+      const body = $("#propsBody");
+      if (state.selected !== null) {
+        const a = ARTWORKS[state.selected];
+        const el = gallery.querySelector(`.piece[data-index="${state.selected}"] .frame`);
+        body.innerHTML = `
+          <div class="pg"><p class="sub">Linked File</p><span class="wide" title="${fileName(a)}">${fileName(a)}</span></div>
+          <div class="pg"><h5>Transform</h5>${fieldsHTML(relRect(el))}</div>
+          <div class="pg"><h5>Appearance</h5>
+            <div class="appear"><span class="sq" style="background:var(--accent)"></span><span>Title</span><span></span></div>
+            <div class="appear"><span class="sq" style="background:#fff"></span><span>Category</span><span>${a.category}</span></div>
+            <div class="appear"><span class="sq" style="background:#1c1c1e"></span><span>Year</span><span>${a.year}</span></div></div>
+          <div class="pg"><h5>Quick Actions</h5><div class="stack-btns">
+            <button class="pbtn primary" data-act="open">Open Preview</button>
+            <button class="pbtn" data-act="deselect">Deselect</button></div></div>`;
+        body.querySelector(".appear span:last-child").textContent = a.title;
+      } else {
+        const b = boards[state.active];
+        body.innerHTML = `
+          <div class="pg"><p class="sub">No Selection</p><h5>Document</h5>
+            <div class="appear"><span>Units</span><span>Pixels</span></div>
+            <div class="appear"><span>Artboard</span><span>${String(state.active + 1).padStart(2, "0")} - ${b.dataset.name}</span></div></div>
+          <div class="pg"><h5>Transform</h5>${fieldsHTML(relRect(b.querySelector(".artboard")))}</div>
+          <div class="pg"><h5>Rulers &amp; Grids</h5><div class="btnrow">
+            <button class="pbtn ${state.rulers ? "on" : ""}" data-act="rulers">Rulers</button>
+            <button class="pbtn ${state.grid ? "on" : ""}" data-act="grid">Grid</button></div></div>
+          <div class="pg"><h5>Quick Actions</h5><div class="stack-btns">
+            <button class="pbtn primary" data-act="contact">Hire me</button>
+            <button class="pbtn" data-act="email">Copy email address</button>
+            <button class="pbtn" data-act="cv">Download CV</button></div></div>`;
+      }
+    }
+    $("#propsBody").addEventListener("click", e => {
+      const act = e.target.dataset.act; if (!act) return;
+      ({ open: () => openPreview(state.selected), deselect: () => select(null), rulers: toggleRulers, grid: toggleGrid,
+         contact: () => goTo("contact"), email: copyEmail, cv: () => (location.href = CV_URL) })[act]();
+    });
+    // click on empty pasteboard = deselect (like Illustrator)
+    canvas.addEventListener("pointerdown", e => { if (state.tool === "select" && !e.target.closest(".artboard")) select(null); });
+
+    /* ---------- Layers panel ---------- */
+    let workOpen = true;
+    function renderLayers() {
+      const ul = $("#layers"); ul.innerHTML = "";
+      const eye = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/></svg>';
+      boards.forEach((b, k) => {
+        const li = document.createElement("li");
+        const hidden = b.classList.contains("hidden-layer");
+        const isWork = b.id === "ab-work";
+        li.innerHTML = `<div class="layer ${k === state.active && state.selected === null ? "active" : ""}">
+          <button class="eye ${hidden ? "off" : ""}" aria-label="Toggle visibility">${eye}</button>
+          <span class="bar" style="background:${b.dataset.color}"></span>
+          <span class="tw">${isWork ? (workOpen ? "▾" : "▸") : ""}</span>
+          <span class="nm">${b.dataset.name}</span><span class="tg"></span></div>`;
+        const row = li.firstElementChild;
+        row.querySelector(".eye").onclick = ev => { ev.stopPropagation(); b.classList.toggle("hidden-layer"); renderLayers(); drawRulers(); };
+        row.querySelector(".tw").onclick = ev => { if (!isWork) return; ev.stopPropagation(); workOpen = !workOpen; renderLayers(); };
+        row.onclick = () => { if (hidden) b.classList.remove("hidden-layer"); goTo(b.id.slice(3)); renderLayers(); };
+        ul.appendChild(li);
+        if (isWork) {
+          const kids = document.createElement("ul"); kids.className = "kids" + (workOpen ? " open" : "");
+          visible.forEach(i => {
+            const a = ARTWORKS[i], c = document.createElement("li");
+            c.innerHTML = `<div class="layer child ${state.selected === i ? "active" : ""}"><img class="thumb" alt="" src="${imgSrc(a)}"><span class="nm"></span><span class="tg"></span></div>`;
+            c.querySelector(".nm").textContent = a.title;
+            c.firstElementChild.onclick = () => { select(i); gallery.querySelector(`.piece[data-index="${i}"]`).scrollIntoView({ behavior: "smooth", block: "center" }); };
+            c.firstElementChild.ondblclick = () => openPreview(i);
+            kids.appendChild(c);
+          });
+          li.appendChild(kids);
+        }
+      });
+      $("#layerCount").textContent = `${boards.length} Layers`;
+    }
+    function refreshThumbs() { clearTimeout(refreshThumbs.t); refreshThumbs.t = setTimeout(renderLayers, 50); }
+
+    /* ---------- Swatches ---------- */
+    SWATCHES.forEach(c => {
+      const b = document.createElement("button");
+      b.style.background = c; b.title = c; b.setAttribute("aria-label", "Accent " + c);
+      if (c === SWATCHES[0]) b.classList.add("cur");
+      b.onclick = () => {
+        document.documentElement.style.setProperty("--accent", c);
+        document.querySelectorAll("#swatches button").forEach(x => x.classList.toggle("cur", x === b));
+        toast("Accent colour set to " + c);
+      };
+      $("#swatches").appendChild(b);
+    });
+    document.querySelectorAll(".ph").forEach(h => h.onclick = () => h.parentElement.classList.toggle("collapsed"));
+
+    /* ---------- Navigation between artboards ---------- */
+    function goTo(id) { const el = document.getElementById("ab-" + id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    document.addEventListener("click", e => {
+      const g = e.target.closest("[data-goto]"); if (!g) return;
+      e.preventDefault(); closeMenus(); goTo(g.dataset.goto);
+    });
+    const abSel = $("#abSel");
+    boards.forEach((b, k) => abSel.add(new Option(`${k + 1}  ${b.dataset.name}`, k)));
+    abSel.onchange = () => goTo(boards[+abSel.value].id.slice(3));
+    const stepBoard = d => { const k = Math.max(0, Math.min(boards.length - 1, state.active + d)); goTo(boards[k].id.slice(3)); };
+    $("#abPrev").onclick = () => stepBoard(-1);
+    $("#abNext").onclick = () => stepBoard(1);
+    $("#abFirst").onclick = () => goTo("hello");
+    $("#abLast").onclick = () => goTo("contact");
+    function trackActive() {
+      const mid = canvas.getBoundingClientRect().top + canvas.clientHeight * 0.35;
+      let k = 0;
+      boards.forEach((b, i) => { if (!b.classList.contains("hidden-layer") && b.getBoundingClientRect().top <= mid) k = i; });
+      if (canvas.scrollTop + canvas.clientHeight >= canvas.scrollHeight - 4) k = boards.length - 1;
+      if (k !== state.active) {
+        state.active = k; abSel.value = k;
+        boards.forEach((b, i) => b.classList.toggle("active", i === k));
+        if (state.selected === null) renderProps();
+        renderLayers();
+      }
+    }
+
+    /* ---------- Zoom ---------- */
+    const PRESETS = [25, 33.33, 50, 66.67, 75, 100, 125, 150, 200, 300];
+    const zoomSel = $("#zoomSel");
+    const fmt = z => (Math.round(z * 10000) / 100) + "%";
+    function syncZoomUI() {
+      const pct = state.zoom * 100;
+      zoomSel.innerHTML = "";
+      const list = [...new Set([...PRESETS, Math.round(pct * 100) / 100])].sort((a, b) => a - b);
+      list.forEach(p => zoomSel.add(new Option(fmt(p / 100), p)));
+      zoomSel.value = Math.round(pct * 100) / 100;
+      $("#docTitle").textContent = `wan-naqib-portfolio.ai @ ${fmt(state.zoom)} (RGB/Preview)`;
+    }
+    function setZoom(z, ax, ay) {
+      if (mobile.matches) return;
+      z = Math.max(0.25, Math.min(3, z));
+      const prev = state.zoom;
+      ax ??= canvas.clientWidth / 2; ay ??= canvas.clientHeight / 2;
+      const ux = (canvas.scrollLeft + ax) / prev, uy = (canvas.scrollTop + ay) / prev;
+      state.zoom = z; stack.style.zoom = z;
+      canvas.scrollLeft = ux * z - ax; canvas.scrollTop = uy * z - ay;
+      syncZoomUI(); renderProps(); drawRulers();
+    }
+    const zoomIn  = (x, y) => setZoom((PRESETS.find(p => p > state.zoom * 100 + 0.01) ?? 300) / 100, x, y);
+    const zoomOut = (x, y) => setZoom(([...PRESETS].reverse().find(p => p < state.zoom * 100 - 0.01) ?? 25) / 100, x, y);
+    function fitZoom() {
+      if (mobile.matches) return;
+      const avail = canvas.clientWidth - 96;
+      setZoom(Math.min(1, Math.floor((avail / 960) * 100) / 100));
+      canvas.scrollTo({ left: 0 });
+    }
+    zoomSel.onchange = () => setZoom(+zoomSel.value / 100);
+    canvas.addEventListener("wheel", e => {
+      if (!(e.ctrlKey || e.metaKey) || mobile.matches) return;
+      e.preventDefault();
+      const r = canvas.getBoundingClientRect();
+      setZoom(state.zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1), e.clientX - r.left, e.clientY - r.top);
+    }, { passive: false });
+
+    /* ---------- Tools ---------- */
+    const TOOL_NAMES = { select: "Selection", direct: "Direct Selection", pen: "Pen", curv: "Curvature", type: "Type", rect: "Rectangle",
+                         brush: "Paintbrush", rotate: "Rotate", eyedrop: "Eyedropper", artboard: "Artboard", hand: "Hand", zoom: "Zoom" };
+    const FUNCTIONAL = ["select", "direct", "hand", "zoom"];
+    function setTool(t) {
+      if (!FUNCTIONAL.includes(t)) { toast(`The ${TOOL_NAMES[t]} tool is resting — try Hand (H) or Zoom (Z).`); return; }
+      state.tool = t;
+      canvas.dataset.tool = t;
+      document.querySelectorAll(".tool").forEach(b => b.classList.toggle("on", b.dataset.tool === t));
+      $("#toolName").textContent = TOOL_NAMES[t];
+    }
+    document.querySelectorAll(".tool").forEach(b => b.onclick = () => setTool(b.dataset.tool));
+
+    // Hand tool: drag to pan
+    let drag = null;
+    canvas.addEventListener("pointerdown", e => {
+      if (state.tool !== "hand" || e.button !== 0) return;
+      drag = { x: e.clientX, y: e.clientY, l: canvas.scrollLeft, t: canvas.scrollTop };
+      canvas.classList.add("dragging"); canvas.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    canvas.addEventListener("pointermove", e => {
+      mouse.x = e.clientX; mouse.y = e.clientY; requestAnimationFrame(drawRulers);
+      if (!drag) return;
+      canvas.scrollLeft = drag.l - (e.clientX - drag.x); canvas.scrollTop = drag.t - (e.clientY - drag.y);
+    });
+    canvas.addEventListener("pointerup", () => { drag = null; canvas.classList.remove("dragging"); });
+    canvas.addEventListener("pointerleave", () => { mouse.x = mouse.y = null; requestAnimationFrame(drawRulers); });
+    // Zoom tool: click to zoom in, Alt+click to zoom out
+    canvas.addEventListener("click", e => {
+      if (state.tool !== "zoom") return;
+      e.preventDefault();
+      const r = canvas.getBoundingClientRect();
+      (e.altKey ? zoomOut : zoomIn)(e.clientX - r.left, e.clientY - r.top);
+    });
+
+    /* ---------- Rulers ---------- */
+    const mouse = { x: null, y: null };
+    function drawRuler(cv, horizontal) {
+      const dpr = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+      if (!w || !h) return;
+      if (cv.width !== w * dpr || cv.height !== h * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
+      const ctx = cv.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = "#f3f3f3"; ctx.fillRect(0, 0, w, h);
+      const cr = cv.getBoundingClientRect(), sr = stack.getBoundingClientRect(), z = state.zoom;
+      const origin = horizontal ? sr.left - cr.left : sr.top - cr.top;
+      const len = horizontal ? w : h, thick = horizontal ? h : w;
+      const major = [50, 100, 200, 500, 1000].find(s => s * z >= 70) || 1000, minor = major / 10;
+      ctx.strokeStyle = "#9a9a9a"; ctx.fillStyle = "#666"; ctx.lineWidth = 1;
+      ctx.font = "9px Inter, sans-serif";
+      ctx.beginPath();
+      const start = Math.floor(-origin / z / minor) * minor;
+      for (let u = start; origin + u * z < len; u += minor) {
+        const p = Math.round(origin + u * z) + 0.5;
+        const isMajor = Math.abs(u % major) < 0.001, isHalf = Math.abs(u % (major / 2)) < 0.001;
+        const tl = isMajor ? thick : isHalf ? thick * 0.45 : thick * 0.25;
+        if (horizontal) { ctx.moveTo(p, thick); ctx.lineTo(p, thick - tl); }
+        else { ctx.moveTo(thick, p); ctx.lineTo(thick - tl, p); }
+        if (isMajor) {
+          const label = String(Math.round(u));
+          if (horizontal) ctx.fillText(label, p + 3, 9);
+          else { ctx.save(); ctx.translate(10, p + 3); ctx.rotate(-Math.PI / 2); ctx.textAlign = "right"; ctx.fillText(label, 0, 0); ctx.restore(); }
+        }
+      }
+      ctx.stroke();
+      // cursor position marker
+      const m = horizontal ? mouse.x : mouse.y;
+      if (m != null) {
+        const p = Math.round(m - (horizontal ? cr.left : cr.top)) + 0.5;
+        ctx.strokeStyle = "#3d7cf7"; ctx.setLineDash([2, 2]); ctx.beginPath();
+        if (horizontal) { ctx.moveTo(p, 0); ctx.lineTo(p, thick); } else { ctx.moveTo(0, p); ctx.lineTo(thick, p); }
+        ctx.stroke(); ctx.setLineDash([]);
+      }
+    }
+    function drawRulers() {
+      if (!state.rulers || mobile.matches) return;
+      drawRuler($("#rx"), true); drawRuler($("#ry"), false);
+    }
+    function toggleRulers() {
+      state.rulers = !state.rulers;
+      $("#stage").classList.toggle("no-rulers", !state.rulers);
+      renderProps(); requestAnimationFrame(drawRulers);
+      toast(state.rulers ? "Rulers shown" : "Rulers hidden");
+    }
+    function toggleGrid() {
+      state.grid = !state.grid; canvas.classList.toggle("grid", state.grid); renderProps();
+      toast(state.grid ? "Grid shown" : "Grid hidden");
+    }
+
+    /* ---------- Clipboard helpers ---------- */
+    function copyEmail() {
+      (navigator.clipboard?.writeText(EMAIL) ?? Promise.reject()).then(() => toast("Email copied: " + EMAIL), () => toast(EMAIL));
+    }
+    function shareLink() {
+      (navigator.clipboard?.writeText(location.href) ?? Promise.reject()).then(() => toast("Portfolio link copied"), () => toast(location.href));
+    }
+    const shortcuts = () => toast("V Selection · H Hand · Z Zoom · Space drag to pan · Ctrl +/− zoom · Ctrl 0 fit");
+
+    /* ---------- Menus ---------- */
+    const MENUS = [
+      ["File", [["Contact Me…", "⌘E", () => goTo("contact")], ["Download CV (PDF)", "", () => (location.href = CV_URL)], "-",
+                ["Copy Email Address", "", copyEmail], ["Share This Portfolio", "", shareLink]]],
+      ["Edit", [["Undo", "⌘Z"], ["Redo", "⇧⌘Z"], "-", ["Copy Email Address", "⌘C", copyEmail]]],
+      ["Object", [["Group", "⌘G"], ["Lock", "⌘2"], ["Artboards", ""]]],
+      ["Type", [["Font: Space Grotesk", ""], ["Create Outlines", "⇧⌘O"]]],
+      ["Select", [["All Work", "⌘A", () => { filter("All"); goTo("work"); }], "-",
+                  ...CATEGORIES.map(c => [c, "", () => { filter(c); goTo("work"); }]), "-", ["Deselect", "⇧⌘A", () => select(null)]]],
+      ["Effect", [["Drop Shadow…", ""], ["Outer Glow…", ""]]],
+      ["View", [["Zoom In", "⌘+", () => zoomIn()], ["Zoom Out", "⌘−", () => zoomOut()], ["Fit All in Window", "⌘0", fitZoom], ["Actual Size", "⌘1", () => setZoom(1)], "-",
+                [() => (state.rulers ? "Hide Rulers" : "Show Rulers"), "⌘R", toggleRulers], [() => (state.grid ? "Hide Grid" : "Show Grid"), "⌘'", toggleGrid]]],
+      ["Window", [["Properties", "", () => togglePanel("pProps"), () => !$("#pProps").classList.contains("collapsed")],
+                  ["Layers", "F7", () => togglePanel("pLayers"), () => !$("#pLayers").classList.contains("collapsed")],
+                  ["Swatches", "", () => togglePanel("pSwatches"), () => !$("#pSwatches").classList.contains("collapsed")]]],
+      ["Help", [["About the Designer", "", () => goTo("about")], ["Keyboard Shortcuts", "", shortcuts]]],
+    ];
+    function togglePanel(id) { $("#" + id).classList.toggle("collapsed"); }
+    const menusEl = $("#menus");
+    MENUS.forEach(([name, items]) => {
+      const li = document.createElement("li");
+      const top = document.createElement("button"); top.textContent = name; top.setAttribute("aria-haspopup", "true");
+      const dd = document.createElement("ul"); dd.className = "dropdown";
+      li.append(top, dd); menusEl.appendChild(li);
+      const build = () => {
+        dd.innerHTML = "";
+        items.forEach(it => {
+          if (it === "-") { dd.appendChild(document.createElement("hr")); return; }
+          const [label, key, fn, checked] = it;
+          const b = document.createElement("button");
+          b.innerHTML = `<span></span><kbd>${key || ""}</kbd>`;
+          b.firstChild.textContent = typeof label === "function" ? label() : label;
+          if (!fn) b.disabled = true;
+          if (checked && checked()) b.classList.add("checked");
+          b.onclick = () => { closeMenus(); fn(); };
+          const wrap = document.createElement("li"); wrap.appendChild(b); dd.appendChild(wrap);
+        });
+      };
+      top.onclick = e => { e.stopPropagation(); const was = li.classList.contains("open"); closeMenus(); if (!was) { build(); li.classList.add("open"); } };
+      top.onmouseenter = () => { if (menusEl.querySelector("li.open") && !li.classList.contains("open")) { closeMenus(); build(); li.classList.add("open"); } };
+    });
+    function closeMenus() { menusEl.querySelectorAll("li.open").forEach(l => l.classList.remove("open")); }
+    document.addEventListener("click", e => { if (!e.target.closest(".menus")) closeMenus(); });
+
+    /* ---------- Keyboard shortcuts ---------- */
+    let prevTool = null;
+    document.addEventListener("keydown", e => {
+      if ($("#lightbox").open) {
+        if (e.key === "ArrowLeft") stepPreview(-1);
+        if (e.key === "ArrowRight") stepPreview(1);
+        return;
+      }
+      if (e.key === "Escape") { closeMenus(); select(null); return; }
+      if (mobile.matches) return;
+      const mod = e.ctrlKey || e.metaKey;
+      if (mod) {
+        const map = { "=": () => zoomIn(), "+": () => zoomIn(), "-": () => zoomOut(), "0": fitZoom, "1": () => setZoom(1), "r": toggleRulers, "'": toggleGrid };
+        if (map[e.key.toLowerCase()]) { e.preventDefault(); map[e.key.toLowerCase()](); }
+        return;
+      }
+      if (e.key === "Alt") canvas.classList.add("alt");
+      if (e.code === "Space" && !state.space && !e.target.closest("button, a, select")) {
+        e.preventDefault(); state.space = true; prevTool = state.tool; setTool("hand"); return;
+      }
+      const keys = { v: "select", a: "direct", h: "hand", z: "zoom", p: "pen", t: "type", m: "rect", b: "brush", r: "rotate", i: "eyedrop" };
+      const t = keys[e.key.toLowerCase()];
+      if (t && !e.repeat) setTool(t);
+    });
+    document.addEventListener("keyup", e => {
+      if (e.key === "Alt") canvas.classList.remove("alt");
+      if (e.code === "Space" && state.space) { state.space = false; setTool(prevTool || "select"); }
+    });
+
+    /* ---------- Preview (lightbox) ---------- */
+    const lb = $("#lightbox");
+    let current = 0;
+    function openPreview(i) {
+      if (i == null) return;
+      current = visible.includes(i) ? i : visible[0];
+      showPreview(); if (!lb.open) lb.showModal();
+    }
+    function showPreview() {
+      const a = ARTWORKS[current];
+      $("#lbImg").src = imgSrc(a); $("#lbImg").alt = a.title;
+      $("#lbTitle").textContent = a.title;
+      $("#lbMeta").textContent = `${a.category} · ${a.year} · ${visible.indexOf(current) + 1} / ${visible.length}`;
+      $("#lbFile").textContent = `${fileName(a)} — Preview`;
+    }
+    function stepPreview(d) { const p = visible.indexOf(current); current = visible[(p + d + visible.length) % visible.length]; showPreview(); }
+    $("#lbPrev").onclick = () => stepPreview(-1);
+    $("#lbNext").onclick = () => stepPreview(1);
+    $("#lbClose").onclick = () => lb.close();
+    $("#lbStage").addEventListener("click", e => { if (e.target.id === "lbStage") lb.close(); });
+
+    /* ---------- Init ---------- */
+    $("#year").textContent = new Date().getFullYear();
+    $("#mailLink").href = "mailto:" + EMAIL; $("#mailLink").textContent = EMAIL;
+    function measureName() {
+      const n = $("#heroName"); if (!n) return;
+      const r = n.getBoundingClientRect(), z = state.zoom;
+      $("#measure").textContent = `W: ${Math.round(r.width / z)} px  H: ${Math.round(r.height / z)} px`;
+    }
+    canvas.addEventListener("scroll", () => { requestAnimationFrame(drawRulers); trackActive(); }, { passive: true });
+    addEventListener("resize", () => { requestAnimationFrame(drawRulers); });
+    mobile.addEventListener("change", () => { if (mobile.matches) { state.zoom = 1; stack.style.zoom = ""; } else fitZoom(); });
+    boards[0].classList.add("active");
+    syncZoomUI(); renderProps(); renderLayers();
+    (document.fonts?.ready ?? Promise.resolve()).then(() => { measureName(); fitZoom(); drawRulers(); });
+  </script>
+</body>
+</html>
