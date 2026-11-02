@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wan Naqib — Creative Designer</title>
-  <meta name="description" content="Portfolio of Wan Muhammad Naqib, creative designer — branding, illustration, posters and social design." />
+  <meta name="description" content="Portfolio of Wan Muhammad Naqib, creative designer in Kuala Lumpur — posters, branding, comics, UI/UX, video, photography and 3D." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
@@ -242,14 +242,18 @@
     .bbox b { position: absolute; left: calc(50% - 3px); top: calc(50% - 3px); width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--select); }
 
     /* Hero */
-    .hero { padding: 72px 72px 40px; display: grid; gap: 26px; overflow: hidden; }
+    .hero { padding: 72px 72px 44px; display: grid; gap: 24px; overflow: hidden; align-content: start; }
+    .hero > :not(.pen-art) { position: relative; z-index: 1; max-width: 620px; }
+    .facts { display: flex; flex-wrap: wrap; gap: 14px 28px; }
+    .facts span { display: block; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgba(28,28,30,.65); margin-bottom: 2px; }
+    .facts b { font-size: 14px; font-weight: 600; }
     .hero h1 { font: 700 92px/0.96 var(--display); letter-spacing: -0.035em; position: relative; z-index: 1; }
     .name { position: relative; display: inline-block; }
     .name .bbox { opacity: 1; inset: -2px -4px; }
     .measure { position: absolute; left: calc(100% + 14px); top: calc(50% - 9px); white-space: nowrap; font: 500 10px var(--ui-font); letter-spacing: 0; color: #fff; background: #4d4d4d; padding: 3px 6px; border-radius: 2px; }
     .hero .lead { font-size: 19px; line-height: 1.55; max-width: 560px; color: rgba(28,28,30,.88); position: relative; z-index: 1; }
     .hero .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-    .pen-art { position: absolute; right: 28px; top: 28px; width: 230px; height: 230px; pointer-events: none; }
+    .pen-art { position: absolute; right: 30px; top: 26px; width: 250px; height: 250px; pointer-events: none; z-index: 0; opacity: .9; }
     .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid rgba(28,28,30,.2); padding-top: 18px; margin-top: 10px; }
     .chips { display: flex; gap: 5px; }
     .chips span { width: 20px; height: 20px; border: 1px solid rgba(28,28,30,.25); }
@@ -263,12 +267,13 @@
     .filters button:last-child { border-right: 0; }
     .filters button:hover { background: rgba(255,255,255,.8); }
     .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; font-weight: 600; }
-    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 28px; }
-    .piece { display: block; align-self: start; text-align: left; border: 0; background: none; cursor: pointer; color: var(--ink); }
+    .gallery { columns: 3; column-gap: 28px; }
+    .piece { display: block; width: 100%; break-inside: avoid; margin: 0 0 36px; text-align: left; border: 0; background: none; cursor: pointer; color: var(--ink); }
     .piece.hide { display: none; }
     .obj { position: relative; }
-    .frame { aspect-ratio: 4 / 5; overflow: hidden; background: #f4f4f4; box-shadow: 0 10px 28px rgba(90,0,12,.28); }
-    .frame img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .frame { overflow: hidden; background: #f4f4f4; box-shadow: 0 10px 28px rgba(90,0,12,.28); }
+    .frame img { width: 100%; height: auto; transition: transform .5s ease; }
+    .count { position: absolute; right: 8px; bottom: 8px; background: rgba(28,28,30,.82); color: #fff; font-size: 10.5px; font-weight: 600; padding: 3px 7px; border-radius: 3px; pointer-events: none; }
     .piece:hover .frame { outline: 1px solid var(--select); }
     .piece.sel .bbox, .piece:focus-visible .bbox { opacity: 1; }
     .piece:focus-visible { outline: none; }
@@ -279,9 +284,13 @@
 
     /* About */
     .about { padding: 56px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
-    .about .big { font: 500 28px/1.25 var(--display); letter-spacing: -0.01em; margin: 14px 0 16px; }
+    .about .big { font: 500 22px/1.35 var(--display); letter-spacing: -0.01em; margin: 14px 0 16px; }
     .about p { font-size: 15px; line-height: 1.65; color: rgba(28,28,30,.88); margin-bottom: 12px; }
     .about p.big { color: var(--ink); }
+    .me { display: flex; gap: 18px; align-items: center; margin-bottom: 6px; }
+    .me-photo { width: 96px; height: 120px; object-fit: cover; object-position: top; border: 4px solid #fff; box-shadow: 0 6px 18px rgba(90,0,12,.25); flex: none; }
+    .about .me p { margin: 0 0 4px; }
+    .me-name { font-weight: 600; font-size: 15px; color: var(--ink) !important; }
     .lists { display: grid; gap: 24px; align-content: start; }
     .lists h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: rgba(28,28,30,.72); margin-bottom: 8px; font-weight: 600; }
     .lists ul { list-style: none; border-top: 1px solid rgba(28,28,30,.2); }
@@ -371,12 +380,19 @@
     /* ---------- Preview (lightbox) ---------- */
     dialog.lightbox { border: 0; padding: 0; background: transparent; width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh; margin: 0; color: var(--text); }
     dialog.lightbox::backdrop { background: rgba(50,50,50,.97); }
-    .lb-inner { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+    .lb-inner { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; }
     .lb-top { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: var(--panel); border-bottom: 1px solid var(--line); }
-    .lb-stage { display: grid; place-items: center; min-height: 0; padding: 24px 16px; overflow: hidden; background: var(--pasteboard); }
-    .lb-stage img { width: auto; height: auto; max-width: min(1100px, 100%); max-height: calc(100dvh - 150px); object-fit: contain; background: #fff; outline: 1px solid #000; box-shadow: 0 4px 20px rgba(0,0,0,.35); }
+    .lb-stage { display: grid; place-items: center; min-height: 0; padding: 20px 16px; overflow: hidden; background: var(--pasteboard); }
+    .lb-stage img { display: block; max-width: 100%; max-height: 100%; background: #fff; box-shadow: 0 6px 22px rgba(0,0,0,.4); }
     .lb-bar { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 12px 14px; text-align: center; background: var(--panel); border-top: 1px solid var(--line); }
     .lb-bar h3 { font: 600 14px var(--ui-font); }
+    .lb-bar .lb-text { max-width: 560px; }
+    .lb-thumbs { display: flex; gap: 6px; justify-content: center; padding: 8px 12px; background: var(--panel); border-top: 1px solid var(--line); overflow-x: auto; }
+    .lb-thumbs[hidden] { display: none; }
+    .lb-thumbs button { flex: none; width: 56px; height: 42px; padding: 0; border: 2px solid transparent; border-radius: 2px; background: #3a3a3a; cursor: pointer; overflow: hidden; }
+    .lb-thumbs button img { width: 100%; height: 100%; object-fit: cover; }
+    .lb-thumbs button.on { border-color: var(--select); }
+    #lbVideo[hidden] { display: none; }
     .lb-bar p { font-size: 11px; color: var(--text-2); }
     .icon-btn { width: 32px; height: 32px; border-radius: 3px; border: 1px solid #2f2f2f; background: #4a4a4a; color: var(--text); cursor: pointer; display: grid; place-items: center; }
     .icon-btn:hover { background: #5e5e5e; }
@@ -399,14 +415,16 @@
       .canvas { padding: 28px 14px 60px; }
       .stack { width: auto; gap: 48px; zoom: 1 !important; }
       .ab-label { color: #222; }
-      .hero { padding: 36px 22px 24px; gap: 20px; }
+      .hero { padding: 36px 22px 24px; gap: 18px; }
+      .hero > :not(.pen-art) { max-width: none; }
       .hero h1 { font-size: clamp(40px, 12vw, 64px); }
       .hero .lead { font-size: 16px; }
       .pen-art, .measure, .desk-only { display: none; }
       .work { padding: 28px 16px 32px; }
       .work-head { flex-direction: column; align-items: start; gap: 4px; }
       h2.title { font-size: 30px; }
-      .gallery { grid-template-columns: repeat(2, 1fr); gap: 24px 14px; }
+      .gallery { columns: 2; column-gap: 14px; }
+      .piece { margin-bottom: 22px; }
       .piece h3 { font-size: 12.5px; }
       .piece small { display: none; }
       .about { grid-template-columns: 1fr; padding: 32px 22px; gap: 28px; }
@@ -496,30 +514,78 @@
                 <rect x="26" y="226" width="8" height="8"/><rect x="186" y="146" width="8" height="8" fill="#4a8cff"/><rect x="276" y="66" width="8" height="8"/>
               </g>
             </svg>
-            <p class="kicker">Creative Designer · Based in Malaysia</p>
+            <p class="kicker">Creative Designer · Kuala Lumpur, Malaysia</p>
             <h1>
               Hi, I'm<br />
-              <span class="name" id="heroName">Wan Naqib.<span class="bbox"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="measure" id="measure"></span></span><br />
+              <span class="name" id="heroName">Wan Naqib.<span class="bbox"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span><br />
               I make ideas <span class="accent">visible.</span>
             </h1>
-            <p class="lead">I design brand identities, posters, illustrations and social content — bold, thoughtful visuals that help people and brands stand out.</p>
+            <p class="lead">I'm a Multimedia Design graduate from Management and Science University. I create posters, branding, comics, UI/UX, video, photography and 3D work that helps people and brands get noticed.</p>
             <div class="actions">
               <a class="btn lg" href="#ab-work" data-goto="work">View my work →</a>
               <a class="btn lg ghost" href="#ab-contact" data-goto="contact">Get in touch</a>
             </div>
-            <div class="hero-foot">
-              <div class="chips" aria-hidden="true">
-                <span style="background:#1c1c1e"></span><span style="background:var(--accent)"></span><span style="background:#ffc93c"></span>
-                <span style="background:#4a8cff"></span><span style="background:#8fd3b6"></span><span style="background:#fff"></span>
-              </div>
-              <span class="coords desk-only">Tip: try the Hand (H) and Zoom (Z) tools, or the View menu.</span>
+            <div class="hero-foot facts">
+              <div><span>Based in</span><b>Kuala Lumpur, Malaysia</b></div>
+              <div><span>Studied</span><b>Multimedia Design, MSU</b></div>
+              <div><span>Status</span><b>Open to work</b></div>
             </div>
           </div>
         </section>
 
-        <!-- ===== Artboard 02: Work ===== -->
+        <!-- ===== Artboard 02: About ===== -->
+        <section class="ab" id="ab-about" data-name="About" data-color="#2ea86b">
+          <div class="ab-label">02 - About</div>
+          <div class="artboard about">
+            <div>
+              <div class="me">
+                <img class="me-photo" src="images/profile.jpg" alt="Portrait of Wan Muhammad Naqib" loading="lazy" />
+                <div>
+                  <p class="kicker">About me</p>
+                  <p class="me-name">Wan Muhammad Naqib Bin Wan Mohd Razziff</p>
+                  <p>Kuala Lumpur, Malaysia</p>
+                </div>
+              </div>
+              <p class="big">Creative and motivated Multimedia graduate from Management &amp; Science University, with professional experience as a Creative &amp; Content Designer at Tarsoft Sdn. Bhd. and a Graphic Designer at VX Brands.</p>
+              <p>Passionate about creative concept development, strategic planning, and visual storytelling, with a strong focus on establishing creative direction before design execution. Dedicated to creating visually engaging and meaningful designs that communicate product value, connect with target audiences, and strengthen brand identity.</p>
+            </div>
+            <div class="lists">
+              <div>
+                <h4>Experience</h4>
+                <ul>
+                  <li>Graphic Designer <em>VX Brands</em></li>
+                  <li>Creative &amp; Content Designer <em>Tarsoft Sdn. Bhd.</em></li>
+                </ul>
+              </div>
+              <div>
+                <h4>What I do</h4>
+                <ul>
+                  <li><span class="c" style="background:#d1101f"></span>Poster &amp; editorial design</li>
+                  <li><span class="c" style="background:#ff8a3d"></span>Branding &amp; logo design</li>
+                  <li><span class="c" style="background:#ffc93c"></span>Comic &amp; illustration</li>
+                  <li><span class="c" style="background:#2ea86b"></span>UI/UX &amp; social media design</li>
+                  <li><span class="c" style="background:#4a8cff"></span>Video editing &amp; short film</li>
+                  <li><span class="c" style="background:#a45bf0"></span>Photography</li>
+                  <li><span class="c" style="background:#1c1c1e"></span>3D modelling &amp; animation</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Software</h4>
+                <ul>
+                  <li>Adobe Illustrator <em>Branding · vector</em></li>
+                  <li>Adobe Photoshop <em>Posters · photo editing</em></li>
+                  <li>Adobe Premiere Pro <em>Video editing</em></li>
+                  <li>Figma <em>UI/UX design</em></li>
+                  <li>Blender <em>3D modelling · animation</em></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Artboard 03: Work ===== -->
         <section class="ab" id="ab-work" data-name="Selected Work" data-color="#ff5c35">
-          <div class="ab-label">02 - Selected Work</div>
+          <div class="ab-label">03 - Selected Work</div>
           <div class="artboard work">
             <div class="work-head">
               <div><p class="kicker">Portfolio</p><h2 class="title">Selected work</h2></div>
@@ -530,50 +596,17 @@
           </div>
         </section>
 
-        <!-- ===== Artboard 03: About ===== -->
-        <section class="ab" id="ab-about" data-name="About" data-color="#2ea86b">
-          <div class="ab-label">03 - About</div>
-          <div class="artboard about">
-            <div>
-              <p class="kicker">About me</p>
-              <p class="big">I'm a creative designer who loves turning messy ideas into clean, memorable visuals.</p>
-              <p>Write 2–3 sentences about yourself here: where you studied or how you started, the kind of clients or projects you enjoy, and what makes your style yours.</p>
-              <p>Currently open to freelance projects and collaborations.</p>
-            </div>
-            <div class="lists">
-              <div>
-                <h4>Services</h4>
-                <ul>
-                  <li><span class="c" style="background:var(--accent)"></span>Branding &amp; logo design</li>
-                  <li><span class="c" style="background:#ffc93c"></span>Illustration</li>
-                  <li><span class="c" style="background:#4a8cff"></span>Posters &amp; print</li>
-                  <li><span class="c" style="background:#8fd3b6"></span>Social media &amp; UI</li>
-                </ul>
-              </div>
-              <div>
-                <h4>Tools</h4>
-                <ul>
-                  <li>Adobe Illustrator <em>Expert</em></li>
-                  <li>Adobe Photoshop <em>Advanced</em></li>
-                  <li>Figma <em>Advanced</em></li>
-                  <li>Procreate <em>Intermediate</em></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <!-- ===== Artboard 04: Contact ===== -->
         <section class="ab" id="ab-contact" data-name="Contact" data-color="#a45bf0">
           <div class="ab-label">04 - Contact</div>
           <div class="artboard contact">
             <p class="kicker">Have a project in mind?</p>
             <h2>Let's create something <span class="accent">together.</span></h2>
-            <a class="mail" id="mailLink" href="mailto:hello@example.com">hello@example.com</a>
+            <a class="mail" id="mailLink" href="mailto:wannaqib465@gmail.com">wannaqib465@gmail.com</a>
             <div class="socials">
-              <a class="btn ghost lg" href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
-              <a class="btn ghost lg" href="https://behance.net/" target="_blank" rel="noopener">Behance</a>
-              <a class="btn ghost lg" href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="btn ghost lg" href="https://www.instagram.com/itz_u_nqb/" target="_blank" rel="noopener">Instagram</a>
+              <a class="btn ghost lg" href="https://www.linkedin.com/in/wannaqib2025" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="btn lg" href="portfolio.pdf" target="_blank" rel="noopener">Portfolio PDF</a>
             </div>
           </div>
         </section>
@@ -613,7 +646,7 @@
     <div class="grp">
       <button data-act="email" title="Copy email address"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1.5" y="3.5" width="13" height="9" rx="1"/><path d="M2 4.5l6 4.5 6-4.5"/></svg></button>
       <button data-act="share" title="Copy portfolio link"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6.5 9.5l3-3M5 7L3.5 8.5a2.1 2.1 0 0 0 3 3L8 10M11 9l1.5-1.5a2.1 2.1 0 0 0-3-3L8 6"/></svg></button>
-      <button data-act="cv" title="Download CV"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9v5h10V9M8 2v8M5 7l3 3 3-3"/></svg></button>
+      <button data-act="cv" title="Download portfolio PDF"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9v5h10V9M8 2v8M5 7l3 3 3-3"/></svg></button>
     </div>
   </aside>
 
@@ -643,9 +676,11 @@
     <div class="lb-inner">
       <div class="lb-top"><span id="lbFile"></span><button class="icon-btn" id="lbClose" aria-label="Close">✕</button></div>
       <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" /></div>
+      <div class="lb-thumbs" id="lbThumbs"></div>
       <div class="lb-bar">
         <button class="icon-btn" id="lbPrev" aria-label="Previous">←</button>
-        <div><h3 id="lbTitle"></h3><p id="lbMeta"></p></div>
+        <div class="lb-text"><h3 id="lbTitle"></h3><p id="lbMeta"></p></div>
+        <a class="btn blue" id="lbVideo" href="#" target="_blank" rel="noopener" hidden>▶ Watch video</a>
         <button class="icon-btn" id="lbNext" aria-label="Next">→</button>
       </div>
     </div>
@@ -660,19 +695,30 @@
        - "category" must match one of the CATEGORIES.
        Until an image is uploaded, a coloured placeholder shows.
        ========================================================= */
-    const EMAIL  = "hello@example.com";
-    const CV_URL = "cv.pdf";   // upload a cv.pdf to your repo, or change this link
-    const CATEGORIES = ["Branding", "Illustration", "Posters & Print", "Social & UI"];
+    const EMAIL  = "wannaqib465@gmail.com";
+    const CV_URL = "portfolio.pdf";   // your full portfolio PDF (upload it to the repo with this name)
+    const CATEGORIES = ["Poster", "Branding", "Comic", "Corporate", "UI/UX", "Short Film", "TikTok", "Photography", "3D Modelling", "Animation"];
+    /* Each project: title, category, year (optional), desc (optional),
+       images (first one is the cover), video (optional link to YouTube/TikTok/Google Drive). */
     const ARTWORKS = [
-      { title: "Kopi Pagi — Café Identity", category: "Branding",        year: 2026, src: "images/artwork-01.jpg" },
-      { title: "City at Dusk",              category: "Illustration",    year: 2026, src: "images/artwork-02.jpg" },
-      { title: "Music Festival Poster",     category: "Posters & Print", year: 2025, src: "images/artwork-03.jpg" },
-      { title: "Skincare Launch Campaign",  category: "Social & UI",     year: 2025, src: "images/artwork-04.jpg" },
-      { title: "Studio Logo Set",           category: "Branding",        year: 2025, src: "images/artwork-05.jpg" },
-      { title: "Character Series",          category: "Illustration",    year: 2025, src: "images/artwork-06.jpg" },
-      { title: "Book Cover Concept",        category: "Posters & Print", year: 2024, src: "images/artwork-07.jpg" },
-      { title: "Mobile App Screens",        category: "Social & UI",     year: 2024, src: "images/artwork-08.jpg" },
-      { title: "Batik Pattern Study",       category: "Illustration",    year: 2024, src: "images/artwork-09.jpg" },
+      { title: "Rentak — Visual Typography", category: "Poster", desc: "Typographic poster: “Setiap langkah ada makna, jalan terus langkah laju.”", images: ["images/poster-rentak.jpg"] },
+      { title: "Kipchoge — Magazine Spread", category: "Poster", desc: "Editorial spread about marathon legend Eliud Kipchoge.", images: ["images/poster-kipchoge-spread.jpg"] },
+      { title: "The Hobbit: Quest to Kinabalu", category: "Poster", year: 2025, desc: "Movie poster photo-manipulation.", images: ["images/poster-hobbit-kinabalu.jpg"] },
+      { title: "Masten Cafe", category: "Branding", year: 2024, desc: "Brand identity: logo, signage, promo flyer, grand-launch poster and menu.", images: ["images/branding-masten-cafe-01.jpg", "images/branding-masten-cafe-02.jpg", "images/branding-masten-cafe-03.jpg", "images/branding-masten-cafe-04.jpg", "images/branding-masten-cafe-05.jpg", "images/branding-masten-cafe-06.jpg"] },
+      { title: "Final Hope #1 — Limited Edition", category: "Comic", year: 2024, desc: "Comic book — story and art by Wan Naqib. Cover, 7 story pages and back cover.", images: ["images/comic-final-hope-01.jpg", "images/comic-final-hope-02.jpg", "images/comic-final-hope-03.jpg", "images/comic-final-hope-04.jpg", "images/comic-final-hope-05.jpg", "images/comic-final-hope-06.jpg", "images/comic-final-hope-07.jpg", "images/comic-final-hope-08.jpg", "images/comic-final-hope-09.jpg"] },
+      { title: "Tarsoft Social Media Posters", category: "Corporate", year: 2024, desc: "Advertising and marketing posters for Tarsoft training programmes.", images: ["images/corporate-tarsoft-01.jpg", "images/corporate-tarsoft-02.jpg", "images/corporate-tarsoft-03.jpg", "images/corporate-tarsoft-04.jpg", "images/corporate-tarsoft-05.jpg", "images/corporate-tarsoft-06.jpg", "images/corporate-tarsoft-07.jpg"] },
+      { title: "Runwell — Website UI/UX", category: "UI/UX", year: 2025, desc: "Final Year Project — Runwell: The Evolution of Online Platforms in Promoting Runner’s Health and Wellness.", images: ["images/uiux-runwell-website-01.jpg", "images/uiux-runwell-website-02.jpg", "images/uiux-runwell-website-03.jpg", "images/uiux-runwell-website-04.jpg", "images/uiux-runwell-website-05.jpg", "images/uiux-runwell-website-06.jpg", "images/uiux-runwell-website-07.jpg"] },
+      { title: "Runwell — Wellness Cards", category: "UI/UX", year: 2025, desc: "Final Year Project — illustrated wellness cards.", images: ["images/uiux-runwell-cards-01.jpg", "images/uiux-runwell-cards-02.jpg", "images/uiux-runwell-cards-03.jpg"] },
+      { title: "Runwell — Race Bib Stickers", category: "UI/UX", year: 2025, desc: "Final Year Project — 10 KM and 5 KM race bib designs.", images: ["images/uiux-runwell-stickers-01.jpg", "images/uiux-runwell-stickers-02.jpg"] },
+      { title: "Video Editing — Voiceover & Sound Design", category: "Short Film", desc: "Video edit with voiceover and sound design.", video: "", images: ["images/film-video-editing.jpg"] },
+      { title: "Short Film — S.S.Y Production", category: "Short Film", desc: "Short film presented by S.S.Y Production.", video: "", images: ["images/film-short-film.jpg"] },
+      { title: "Tarsoft TikTok Content", category: "TikTok", year: 2024, desc: "Content creator culture of Tarsoft — daily routine, 5 km challenge, MSUIREX 2024 and more.", video: "", images: ["images/tiktok-tarsoft-01.jpg", "images/tiktok-tarsoft-02.jpg", "images/tiktok-tarsoft-03.jpg", "images/tiktok-tarsoft-04.jpg", "images/tiktok-tarsoft-05.jpg"] },
+      { title: "Tarsoft Training Photography", category: "Photography", desc: "Event photography from Power BI training sessions.", images: ["images/photo-tarsoft-training-01.jpg", "images/photo-tarsoft-training-02.jpg", "images/photo-tarsoft-training-03.jpg", "images/photo-tarsoft-training-04.jpg", "images/photo-tarsoft-training-05.jpg", "images/photo-tarsoft-training-06.jpg", "images/photo-tarsoft-training-07.jpg", "images/photo-tarsoft-training-08.jpg", "images/photo-tarsoft-training-09.jpg", "images/photo-tarsoft-training-10.jpg"] },
+      { title: "Scooter — Low Poly", category: "3D Modelling", desc: "Low-poly scooter modelled in Blender.", images: ["images/3d-scooter.jpg"] },
+      { title: "Car — Low Poly", category: "3D Modelling", desc: "Low-poly car modelled in Blender.", images: ["images/3d-car.jpg"] },
+      { title: "Environment Design — Low Poly", category: "3D Modelling", desc: "Low-poly race-track environment.", images: ["images/3d-environment.jpg"] },
+      { title: "2D Animation", category: "Animation", desc: "2D animation — Dinz Production.", video: "", images: ["images/animation-2d.jpg"] },
+      { title: "3D Animation", category: "Animation", desc: "3D low-poly race animation.", video: "", images: ["images/animation-3d.jpg"] },
     ];
     const SWATCHES = ["#d1101f","#ff5d6c","#4a8cff","#2ea86b","#a45bf0","#ff4f9a","#00a6b4","#1c1c1e",
                       "#ffd6c9","#fff1c2","#d6e4fd","#cdeedd","#eadcfd","#ffd3e6","#c7eef1","#8a8a8a"];
@@ -744,8 +790,9 @@
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><rect width="400" height="500" fill="${a}"/>${shapes}<text x="24" y="476" font-family="sans-serif" font-size="13" fill="${txt}" opacity=".85">${title.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</text></svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     }
-    const fileName = a => a.src.split("/").pop();
-    const imgSrc = a => a._fallback || a.src;
+    const fileName = a => a.images[0].split("/").pop();
+    const imgSrc = a => a._fallback || a.images[0];
+    const metaLine = a => a.category + (a.year ? " · " + a.year : "");
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
     /* ---------- Toast & hint line ---------- */
@@ -768,11 +815,12 @@
     ARTWORKS.forEach((art, i) => {
       const b = document.createElement("button");
       b.className = "piece"; b.dataset.index = i; b.dataset.cat = art.category;
-      b.innerHTML = `<div class="obj"><div class="frame"><img loading="lazy" alt="${esc(art.title)}"></div>${HANDLES}</div>
-        <div class="meta"><h3>${esc(art.title)}</h3><small>${esc(art.category)} · ${art.year}</small></div>`;
+      const n = art.images.length;
+      b.innerHTML = `<div class="obj"><div class="frame"><img loading="lazy" alt="${esc(art.title)}"></div>${n > 1 ? `<span class="count">${n} images</span>` : ""}${HANDLES}</div>
+        <div class="meta"><h3>${esc(art.title)}</h3><small>${esc(metaLine(art))}</small></div>`;
       const img = b.querySelector("img");
       img.onerror = () => { img.onerror = null; art._fallback = placeholder(i, art.title); img.src = art._fallback; refreshThumbs(); };
-      img.src = art.src;
+      img.src = art.images[0];
       b.addEventListener("mouseenter", () => { select(i); if (state.tool === "select" || state.tool === "direct") setHint(`Click to preview “${art.title}”.`); });
       b.addEventListener("mouseleave", () => setHint());
       b.addEventListener("focus", () => select(i));
@@ -790,7 +838,7 @@
       filters.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.cat === cat));
       gallery.querySelectorAll(".piece").forEach(p => p.classList.toggle("hide", cat !== "All" && p.dataset.cat !== cat));
       visible = [...gallery.querySelectorAll(".piece:not(.hide)")].map(p => +p.dataset.index);
-      $("#countLabel").textContent = `${visible.length} of ${ARTWORKS.length} objects`;
+      $("#countLabel").textContent = `${visible.length} of ${ARTWORKS.length} projects`;
       if (state.selected !== null && !visible.includes(state.selected)) select(null);
       renderLayers(); requestAnimationFrame(drawRulers);
     }
@@ -837,7 +885,8 @@
           <div class="ps"><div class="ps-head">Appearance</div>
             <div class="appear"><span class="sq" style="background:var(--accent)"></span><span>Title</span><span title="${esc(a.title)}">${esc(a.title)}</span></div>
             <div class="appear"><span class="sq" style="background:#fff"></span><span>Category</span><span>${esc(a.category)}</span></div>
-            <div class="appear"><span class="sq" style="background:#1c1c1e"></span><span>Year</span><span>${a.year}</span></div></div>
+            <div class="appear"><span class="sq" style="background:#1c1c1e"></span><span>Year</span><span>${a.year || "—"}</span></div>
+            <div class="appear"><span class="sq" style="background:#4a8cff"></span><span>Images</span><span>${a.images.length}</span></div></div>
           <div class="ps"><div class="ps-head">Quick Actions</div><div class="qa">
             <button class="pbtn primary full" data-act="open">Open Preview</button>
             <button class="pbtn" data-act="prevSel">Previous</button><button class="pbtn" data-act="nextSel">Next</button></div></div>`;
@@ -856,7 +905,7 @@
             <label class="check"><input type="checkbox" data-act="grid" ${state.grid ? "checked" : ""}> Show Grid</label></div>
           <div class="ps"><div class="ps-head">Quick Actions</div><div class="qa">
             <button class="pbtn primary full" data-act="contact">Hire me</button>
-            <button class="pbtn" data-act="email">Copy Email</button><button class="pbtn" data-act="cv">Download CV</button>
+            <button class="pbtn" data-act="email">Copy Email</button><button class="pbtn" data-act="cv">Portfolio PDF</button>
             <button class="pbtn full" data-act="work">View Selected Work</button></div></div>`;
       }
     }
@@ -1078,7 +1127,7 @@
 
     /* ---------- Menus ---------- */
     const MENUS = [
-      ["File", [["Contact Me…", "Ctrl+E", () => goTo("contact")], ["Download CV (PDF)", "", () => (location.href = CV_URL)], "-",
+      ["File", [["Contact Me…", "Ctrl+E", () => goTo("contact")], ["Download Portfolio (PDF)", "", () => (location.href = CV_URL)], "-",
                 ["Copy Email Address", "", copyEmail], ["Share This Portfolio", "", shareLink]]],
       ["Edit", [["Undo", "Ctrl+Z"], ["Redo", "Shift+Ctrl+Z"], "-", ["Copy Email Address", "Ctrl+C", copyEmail]]],
       ["Object", [["Group", "Ctrl+G"], ["Lock", "Ctrl+2"], ["Artboards", ""]]],
@@ -1144,20 +1193,52 @@
 
     /* ---------- Preview (lightbox) ---------- */
     const lb = $("#lightbox");
-    let current = 0;
-    function openPreview(i) {
+    let current = 0, imgIdx = 0;
+    function openPreview(i, k = 0) {
       if (i == null) return;
-      current = visible.includes(i) ? i : visible[0];
+      current = visible.includes(i) ? i : visible[0]; imgIdx = k;
       showPreview(); if (!lb.open) lb.showModal();
     }
     function showPreview() {
-      const a = ARTWORKS[current];
-      $("#lbImg").src = imgSrc(a); $("#lbImg").alt = a.title;
+      const a = ARTWORKS[current], n = a.images.length, img = $("#lbImg");
+      img.onerror = () => { img.onerror = null; img.src = placeholder(current, a.title); };
+      img.onload = fitPreview; img.style.width = img.style.height = "";
+      img.src = a.images[imgIdx]; img.alt = `${a.title} — image ${imgIdx + 1} of ${n}`;
       $("#lbTitle").textContent = a.title;
-      $("#lbMeta").textContent = `${a.category} · ${a.year} · ${visible.indexOf(current) + 1} / ${visible.length}`;
-      $("#lbFile").textContent = `${fileName(a)} @ Fit (RGB/Preview)`;
+      $("#lbMeta").textContent = [a.desc, metaLine(a), n > 1 ? `Image ${imgIdx + 1} / ${n}` : "", `Project ${visible.indexOf(current) + 1} / ${visible.length}`].filter(Boolean).join("  ·  ");
+      $("#lbFile").textContent = `${a.images[imgIdx].split("/").pop()} @ Fit (RGB/Preview)`;
+      const v = $("#lbVideo"); v.hidden = !a.video; if (a.video) v.href = a.video;
+      const t = $("#lbThumbs"); t.hidden = n < 2; t.innerHTML = "";
+      if (n > 1) a.images.forEach((src, k) => {
+        const b = document.createElement("button");
+        b.className = k === imgIdx ? "on" : ""; b.setAttribute("aria-label", `Image ${k + 1}`);
+        b.innerHTML = `<img alt="" loading="lazy" src="${src}">`;
+        b.onclick = () => { imgIdx = k; showPreview(); };
+        t.appendChild(b);
+      });
+      t.querySelector(".on")?.scrollIntoView({ block: "nearest", inline: "center" });
     }
-    function stepPreview(d) { const p = visible.indexOf(current); current = visible[(p + d + visible.length) % visible.length]; showPreview(); }
+    // fit the image to the screen, enlarging small images by at most 1.8x so they stay sharp
+    function fitPreview() {
+      const img = $("#lbImg"), st = $("#lbStage");
+      if (!img.naturalWidth) return;
+      const cs = getComputedStyle(st);
+      const aw = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const ah = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      const k = Math.min(aw / img.naturalWidth, ah / img.naturalHeight, 1.8);
+      img.style.width = Math.round(img.naturalWidth * k) + "px";
+      img.style.height = Math.round(img.naturalHeight * k) + "px";
+    }
+    addEventListener("resize", () => { if (lb.open) fitPreview(); });
+        // arrows step through a project's images, then on to the next/previous project
+    function stepPreview(d) {
+      const a = ARTWORKS[current];
+      if (imgIdx + d >= 0 && imgIdx + d < a.images.length) { imgIdx += d; return showPreview(); }
+      const p = visible.indexOf(current);
+      current = visible[(p + d + visible.length) % visible.length];
+      imgIdx = d > 0 ? 0 : ARTWORKS[current].images.length - 1;
+      showPreview();
+    }
     $("#lbPrev").onclick = () => stepPreview(-1);
     $("#lbNext").onclick = () => stepPreview(1);
     $("#lbClose").onclick = () => lb.close();
@@ -1169,7 +1250,7 @@
     function measureName() {
       const n = $("#heroName"); if (!n) return;
       const r = n.getBoundingClientRect(), z = state.zoom;
-      $("#measure").textContent = `W: ${Math.round(r.width / z)} px  H: ${Math.round(r.height / z)} px`;
+      if ($("#measure")) $("#measure").textContent = `W: ${Math.round(r.width / z)} px  H: ${Math.round(r.height / z)} px`;
     }
     canvas.addEventListener("scroll", () => { if (state.rulers) requestAnimationFrame(drawRulers); trackActive(); }, { passive: true });
     addEventListener("resize", () => requestAnimationFrame(drawRulers));
