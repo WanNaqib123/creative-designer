@@ -16,7 +16,9 @@
        ========================================================= */
     :root {
       color-scheme: dark;
-      --accent: #ff5c35;
+      --accent: #d1101f;        /* highlight colour for "visible." and "together." */
+      --red: #d1101f;           /* logo + main red */
+      --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3CfeFuncA type='linear' slope='0' intercept='.38'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       --menu: #323232;          /* top menu bar */
       --panel: #535353;         /* toolbar, control bar, panels */
       --panel-2: #474747;       /* tab strips, section headers */
@@ -56,7 +58,7 @@
     .menubar { grid-area: menu; display: flex; align-items: center; gap: 2px; padding: 0 6px; background: var(--menu); position: relative; z-index: 60; }
     .mark {
       width: 22px; height: 22px; border-radius: 4px; flex: none; margin: 0 6px 0 2px;
-      display: grid; place-items: center; background: var(--accent); color: #fff;
+      display: grid; place-items: center; background: var(--red); color: #fff;
       font: 700 10px/1 var(--display); text-decoration: none;
     }
     .home { width: 30px; height: 26px; display: grid; place-items: center; color: var(--text-2); border-radius: 4px; text-decoration: none; margin-right: 8px; }
@@ -97,6 +99,12 @@
     .btn.ghost { background: transparent; color: var(--ink); }
     .btn.ghost:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
     .btn.lg { font-size: 14px; padding: 10px 18px; }
+    .artboard .btn { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .artboard .btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+    .artboard .btn.ghost { background: rgba(255,255,255,.35); color: var(--ink); border-color: var(--ink); }
+    .artboard .btn.ghost:hover { background: var(--ink); color: #fff; }
+    /* highlighted words sit on a white label so they read on red and white */
+    .artboard .accent { color: var(--accent); background: #fff; padding: 0 .12em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
     /* ---------- Control bar ---------- */
     .ctrlbar {
@@ -184,13 +192,39 @@
     .ab { scroll-margin-top: 36px; }
     .ab.hidden-layer { display: none; }
     .ab-label { font: 11px var(--ui-font); color: #1f1f1f; margin-bottom: 5px; cursor: default; }
-    .artboard { background: var(--artboard); color: var(--ink); position: relative; outline: 1px solid rgba(0,0,0,.35); box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+    /* ===== Grainy red + white gradient on every page (artboard) =====
+       Soft red and white blobs mixed together, with a film-grain layer on top.
+       Change the blob colours (#ffffff white, #e3172b red) or positions below. */
+    .artboard {
+      position: relative; color: var(--ink);
+      outline: 1px solid rgba(0,0,0,.35); box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      background-color: #f4b0b7;
+      background-image: var(--noise),
+        radial-gradient(var(--s1, 55% 45%) at var(--g1, 12% 16%), #ffffff 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(var(--s2, 50% 55%) at var(--g2, 88% 20%), #d50f20 0%, rgba(213,15,32,0) 72%),
+        radial-gradient(var(--s3, 45% 40%) at var(--g3, 45% 60%), #ffffff 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(var(--s4, 50% 45%) at var(--g4, 8% 96%), #d50f20 0%, rgba(213,15,32,0) 72%),
+        radial-gradient(var(--s5, 45% 45%) at var(--g5, 94% 92%), #ff3b4e 0%, rgba(255,59,78,0) 70%),
+        linear-gradient(var(--ga, 160deg), #fdeeef 0%, #f3a3ab 50%, #e44d5d 100%);
+      background-size: 160px 160px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    }
+    /* each page gets its own mix of blobs */
+    #ab-work .artboard    { --g1: 85% 8%;  --g2: 8% 30%;  --g3: 60% 55%; --g4: 95% 70%; --g5: 20% 98%; --ga: 200deg; --s2: 45% 35%; --s4: 40% 30%; }
+    #ab-about .artboard   { --g1: 92% 85%; --g2: 15% 10%; --g3: 70% 20%; --g4: 50% 105%; --g5: 0% 70%; --ga: 120deg; }
+    #ab-contact .artboard { --g1: 50% 50%; --g2: 0% 0%;   --g3: 85% 15%; --g4: 100% 100%; --g5: 5% 95%; --ga: 180deg; --s1: 60% 70%; }
     .ab.active .artboard { outline: 1px solid #000; }
     .canvas.grid .artboard {
-      background-image: linear-gradient(rgba(74,140,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(74,140,255,.12) 1px, transparent 1px);
-      background-size: 24px 24px;
+      background-image: linear-gradient(rgba(28,28,30,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(28,28,30,.12) 1px, transparent 1px),
+        var(--noise),
+        radial-gradient(var(--s1, 55% 45%) at var(--g1, 12% 16%), #ffffff 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(var(--s2, 50% 55%) at var(--g2, 88% 20%), #d50f20 0%, rgba(213,15,32,0) 72%),
+        radial-gradient(var(--s3, 45% 40%) at var(--g3, 45% 60%), #ffffff 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(var(--s4, 50% 45%) at var(--g4, 8% 96%), #d50f20 0%, rgba(213,15,32,0) 72%),
+        radial-gradient(var(--s5, 45% 45%) at var(--g5, 94% 92%), #ff3b4e 0%, rgba(255,59,78,0) 70%),
+        linear-gradient(var(--ga, 160deg), #fdeeef 0%, #f3a3ab 50%, #e44d5d 100%);
+      background-size: 24px 24px, 24px 24px, 160px 160px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
     }
-    .kicker { font-size: 11px; color: #6c6c72; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+    .kicker { font-size: 11px; color: rgba(28,28,30,.72); letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
     .accent { color: var(--accent); }
     h2.title { font: 700 40px/1 var(--display); letter-spacing: -0.02em; }
 
@@ -213,27 +247,27 @@
     .name { position: relative; display: inline-block; }
     .name .bbox { opacity: 1; inset: -2px -4px; }
     .measure { position: absolute; left: calc(100% + 14px); top: calc(50% - 9px); white-space: nowrap; font: 500 10px var(--ui-font); letter-spacing: 0; color: #fff; background: #4d4d4d; padding: 3px 6px; border-radius: 2px; }
-    .hero .lead { font-size: 19px; line-height: 1.55; max-width: 560px; color: #3a3a3e; position: relative; z-index: 1; }
+    .hero .lead { font-size: 19px; line-height: 1.55; max-width: 560px; color: rgba(28,28,30,.88); position: relative; z-index: 1; }
     .hero .actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .pen-art { position: absolute; right: 28px; top: 28px; width: 230px; height: 230px; pointer-events: none; }
-    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid #ececec; padding-top: 18px; margin-top: 10px; }
+    .hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid rgba(28,28,30,.2); padding-top: 18px; margin-top: 10px; }
     .chips { display: flex; gap: 5px; }
-    .chips span { width: 20px; height: 20px; border: 1px solid rgba(0,0,0,.14); }
-    .coords { font-size: 11px; color: #6c6c72; }
+    .chips span { width: 20px; height: 20px; border: 1px solid rgba(28,28,30,.25); }
+    .coords { font-size: 11px; color: rgba(28,28,30,.72); }
 
     /* Work */
     .work { padding: 52px 48px 56px; }
     .work-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 18px; }
-    .filters { display: flex; flex-wrap: nowrap; max-width: 100%; overflow-x: auto; margin-bottom: 30px; border: 1px solid #cbcbcb; border-radius: 5px; width: fit-content; }
-    .filters button { white-space: nowrap; flex: none; border: 0; border-right: 1px solid #cbcbcb; background: #fff; color: var(--ink); padding: 6px 14px; cursor: pointer; font-size: 12px; }
+    .filters { display: flex; flex-wrap: nowrap; max-width: 100%; overflow-x: auto; margin-bottom: 30px; border: 1px solid rgba(28,28,30,.35); border-radius: 5px; width: fit-content; }
+    .filters button { white-space: nowrap; flex: none; border: 0; border-right: 1px solid rgba(28,28,30,.25); background: rgba(255,255,255,.45); color: var(--ink); padding: 6px 14px; cursor: pointer; font-size: 12px; }
     .filters button:last-child { border-right: 0; }
-    .filters button:hover { background: #f1f1f1; }
-    .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .filters button:hover { background: rgba(255,255,255,.8); }
+    .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; font-weight: 600; }
     .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 28px; }
     .piece { display: block; align-self: start; text-align: left; border: 0; background: none; cursor: pointer; color: var(--ink); }
     .piece.hide { display: none; }
     .obj { position: relative; }
-    .frame { aspect-ratio: 4 / 5; overflow: hidden; background: #f4f4f4; }
+    .frame { aspect-ratio: 4 / 5; overflow: hidden; background: #f4f4f4; box-shadow: 0 10px 28px rgba(90,0,12,.28); }
     .frame img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
     .piece:hover .frame { outline: 1px solid var(--select); }
     .piece.sel .bbox, .piece:focus-visible .bbox { opacity: 1; }
@@ -241,24 +275,24 @@
     .piece:hover img { transform: scale(1.03); }
     .piece .meta { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
     .piece h3 { font: 600 14px var(--ui-font); }
-    .piece small { font-size: 11px; color: #6c6c72; white-space: nowrap; padding-top: 2px; }
+    .piece small { font-size: 11px; color: rgba(28,28,30,.68); white-space: nowrap; padding-top: 2px; }
 
     /* About */
     .about { padding: 56px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
     .about .big { font: 500 28px/1.25 var(--display); letter-spacing: -0.01em; margin: 14px 0 16px; }
-    .about p { font-size: 15px; line-height: 1.65; color: #3a3a3e; margin-bottom: 12px; }
+    .about p { font-size: 15px; line-height: 1.65; color: rgba(28,28,30,.88); margin-bottom: 12px; }
     .about p.big { color: var(--ink); }
     .lists { display: grid; gap: 24px; align-content: start; }
-    .lists h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #6c6c72; margin-bottom: 8px; font-weight: 600; }
-    .lists ul { list-style: none; border-top: 1px solid #ececec; }
-    .lists li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #ececec; font-size: 14px; }
+    .lists h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: rgba(28,28,30,.72); margin-bottom: 8px; font-weight: 600; }
+    .lists ul { list-style: none; border-top: 1px solid rgba(28,28,30,.2); }
+    .lists li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(28,28,30,.2); font-size: 14px; }
     .lists li .c { width: 10px; height: 10px; flex: none; }
-    .lists li em { margin-left: auto; font-style: normal; font-size: 11px; color: #6c6c72; }
+    .lists li em { margin-left: auto; font-style: normal; font-size: 11px; color: rgba(28,28,30,.68); }
 
     /* Contact */
     .contact { padding: 72px 56px; text-align: center; display: grid; gap: 22px; justify-items: center; }
     .contact h2 { font: 700 64px/1 var(--display); letter-spacing: -0.03em; }
-    .contact .mail { font: 500 24px var(--display); text-decoration: none; color: var(--ink); border-bottom: 2px solid var(--accent); }
+    .contact .mail { font: 500 24px var(--display); text-decoration: none; color: var(--ink); border-bottom: 2px solid var(--ink); }
     .contact .mail:hover { color: var(--accent); }
     .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 
@@ -454,7 +488,7 @@
           <div class="ab-label">01 - Hello</div>
           <div class="artboard hero">
             <svg class="pen-art" viewBox="0 0 300 300" aria-hidden="true">
-              <path d="M30 230 C 60 80, 170 60, 190 150 S 270 250, 280 70" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M30 230 C 60 80, 170 60, 190 150 S 270 250, 280 70" fill="none" stroke="#1c1c1e" stroke-width="10" stroke-linecap="round"/>
               <g stroke="#4a8cff" stroke-width="1" fill="#fff">
                 <line x1="30" y1="230" x2="60" y2="80"/><line x1="190" y1="150" x2="170" y2="60"/>
                 <line x1="190" y1="150" x2="210" y2="240"/><line x1="280" y1="70" x2="270" y2="250"/>
@@ -640,7 +674,7 @@
       { title: "Mobile App Screens",        category: "Social & UI",     year: 2024, src: "images/artwork-08.jpg" },
       { title: "Batik Pattern Study",       category: "Illustration",    year: 2024, src: "images/artwork-09.jpg" },
     ];
-    const SWATCHES = ["#ff5c35","#ffc93c","#4a8cff","#2ea86b","#a45bf0","#ff4f9a","#00a6b4","#1c1c1e",
+    const SWATCHES = ["#d1101f","#ff5d6c","#4a8cff","#2ea86b","#a45bf0","#ff4f9a","#00a6b4","#1c1c1e",
                       "#ffd6c9","#fff1c2","#d6e4fd","#cdeedd","#eadcfd","#ffd3e6","#c7eef1","#8a8a8a"];
     /* ========================================================= */
 
@@ -810,14 +844,14 @@
       } else {
         const b = boards[state.active];
         const r = relRect(b.querySelector(".artboard"));
-        updateCtrl("Artboard", b.dataset.name, r, "#fff");
+        updateCtrl("Artboard", b.dataset.name, r, "linear-gradient(150deg,#fff,#f4b0b7 45%,#e3172b)");
         body.innerHTML = `
           <div class="ps"><div class="ps-head big">Artboard <button class="mini" data-act="top">Top</button></div></div>
           ${transformHTML(r)}
           <div class="ps"><div class="ps-head">Artboards</div>
             <div class="row"><label>Name:</label><span class="fld">${String(state.active + 1).padStart(2, "0")} - ${esc(b.dataset.name)}</span><span></span></div>
             <div class="row"><label>Preset:</label><span class="fld sel">Custom</span><span></span></div>
-            <div class="row"><label>Fill:</label><span class="fld">White</span><span class="fill-chip"></span></div>
+            <div class="row"><label>Fill:</label><span class="fld">Grainy Red + White</span><span class="fill-chip" style="background:linear-gradient(150deg,#fff,#f4b0b7 45%,#e3172b)"></span></div>
             <label class="check"><input type="checkbox" data-act="rulers" ${state.rulers ? "checked" : ""}> Show Rulers</label>
             <label class="check"><input type="checkbox" data-act="grid" ${state.grid ? "checked" : ""}> Show Grid</label></div>
           <div class="ps"><div class="ps-head">Quick Actions</div><div class="qa">
